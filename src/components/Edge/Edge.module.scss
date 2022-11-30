@@ -1,0 +1,80 @@
+$line-width: 2px;
+$arrow-angle: 30deg;
+$arrow-size: 15px;
+
+$line-color: rgb(161, 161, 161);
+$line-color-hover: darkgoldenrod;
+
+.edge {
+	position: absolute;
+	z-index: 1;
+	width: 200px;
+	height: 20px;
+	transition: all 0.2s ease-in-out;
+
+	.line {
+		position: absolute;
+		width: 100%;
+		height: $line-width;
+		background-color: $line-color;
+		top: 50%;
+		left: 0;
+		transform: translateY(-50%);
+	}
+
+	.arrowTop {
+		position: absolute;
+		right: 0;
+		width: $arrow-size;
+		height: $line-width;
+		transform: translateY(9px) rotate($arrow-angle);
+		transform-origin: right;
+		background-color: $line-color;
+	}
+
+	.arrowBottom {
+		position: absolute;
+		right: 0;
+		width: $arrow-size;
+		height: $line-width;
+		transform: translateY(9px) rotate(-$arrow-angle);
+		transform-origin: right;
+		background-color: $line-color;
+	}
+	&.hovered {
+		.line, .arrowTop, .arrowBottom {
+			background-color: $line-color-hover;
+			height: $line-width + 1px;
+		}
+		& + div {
+			opacity: 1;
+			background-color: rgba(253, 253, 253, 0.9);
+			border: 2px solid $line-color-hover;
+			z-index: 2;
+			color: $line-color-hover
+		}
+	}
+}
+
+.edgeInfo {
+	display: none;
+	position: absolute;
+	font-size: 12px;
+	opacity: 0.6;
+	background-color: rgb(200, 200, 200);
+	padding: 2px 4px;		
+}
+
+.edgeLabel {
+	position: absolute;
+	font-size: 13px;
+	opacity: 1;
+	padding: 3px 4px;
+	border-radius: 2px;
+	font-family: monospace;
+
+	cursor: default;
+	border: 1px solid transparent;
+	text-align: center;
+	z-index: 3;
+}

@@ -1,0 +1,131 @@
+{
+	"$schema": "https://jsongraphformat.info/v2.0/json-graph-schema.json",
+	"graph": {
+		"directed": true,
+		"type": "arg",
+		"nodes": {
+			"node_0": {
+				"label": "(CfaState L0   (PredState))",
+				"metadata": { "style": "NORMAL", "color": "#000000", "fill": "#FFFFFF", "font": "courier", "align": "LEFT", "shape": "RECTANGLE", "peripheries": "1" }
+			},
+			"node_12": {
+				"label": "(CfaState L1   (PredState (not (>= x 5))              (<= x 0)              (<= x 1)))",
+				"metadata": { "style": "NORMAL", "color": "#000000", "fill": "#FFFFFF", "font": "courier", "align": "LEFT", "shape": "RECTANGLE", "peripheries": "1" }
+			},
+			"node_20": {
+				"label": "(CfaState L1   (PredState (not (>= x 5))              (<= x 1)              (<= x 2)              (<= x 3)))",
+				"metadata": { "style": "NORMAL", "color": "#000000", "fill": "#FFFFFF", "font": "courier", "align": "LEFT", "shape": "RECTANGLE", "peripheries": "1" }
+			},
+			"node_21": {
+				"label": "(CfaState L1   (PredState (not (>= x 5))              (<= x 2)              (<= x 3)))",
+				"metadata": { "style": "NORMAL", "color": "#000000", "fill": "#FFFFFF", "font": "courier", "align": "LEFT", "shape": "RECTANGLE", "peripheries": "1" }
+			},
+			"node_22": {
+				"label": "(CfaState L1   (PredState (not (>= x 5))              (<= x 3)))",
+				"metadata": { "style": "NORMAL", "color": "#000000", "fill": "#FFFFFF", "font": "courier", "align": "LEFT", "shape": "RECTANGLE", "peripheries": "1" }
+			},
+			"node_23": {
+				"label": "(CfaState L1   (PredState (not (>= x 5))))",
+				"metadata": { "style": "NORMAL", "color": "#000000", "fill": "#FFFFFF", "font": "courier", "align": "LEFT", "shape": "RECTANGLE", "peripheries": "1" }
+			},
+			"node_24": {
+				"label": "(CfaState L1   (PredState))",
+				"metadata": { "style": "NORMAL", "color": "#000000", "fill": "#FFFFFF", "font": "courier", "align": "LEFT", "shape": "RECTANGLE", "peripheries": "1" }
+			},
+			"node_26": {
+				"label": "(CfaState L3   (PredState (>= x 5)              (not (<= x 0))              (not (<= x 1))              (not (<= x 2))              (not (<= x 3))))",
+				"metadata": { "style": "NORMAL", "color": "#000000", "fill": "#FFFFFF", "font": "courier", "align": "LEFT", "shape": "RECTANGLE", "peripheries": "1" }
+			},
+			"node_28": {
+				"label": "(CfaState ERR   (PredState (>= x 5)              (not (<= x 0))              (not (<= x 1))              (not (<= x 2))              (not (<= x 3))))",
+				"metadata": { "style": "NORMAL", "color": "#000000", "fill": "#FFFFFF", "font": "courier", "align": "LEFT", "shape": "RECTANGLE", "peripheries": "2" }
+			},
+			"node_27": {
+				"label": "(CfaState END   (PredState (>= x 5)              (not (<= x 0))              (not (<= x 1))              (not (<= x 2))              (not (<= x 3))))",
+				"metadata": { "style": "NORMAL", "color": "#000000", "fill": "#FFFFFF", "font": "courier", "align": "LEFT", "shape": "RECTANGLE", "peripheries": "1" }
+			},
+			"node_25": {
+				"label": "(CfaState L1   (PredState))",
+				"metadata": { "style": "NORMAL", "color": "#000000", "fill": "#FFFFFF", "font": "courier", "align": "LEFT", "shape": "RECTANGLE", "peripheries": "1" }
+			},
+			"phantom_init0": {
+				"label": "",
+				"metadata": { "style": "NORMAL", "color": "#FFFFFF", "fill": "#FFFFFF", "font": "", "align": "CENTER", "shape": "ELLIPSE", "peripheries": "1" }
+			}
+		},
+		"edges": [
+			{
+				"label": "(CfaAction   (assign x 0))",
+				"source": "node_0",
+				"target": "node_12",
+				"metadata": { "color": "#000000", "style": "NORMAL", "weight": "1", "font": "courier", "align": "LEFT" }
+			},
+			{
+				"label": "(CfaAction   (assume (< x 5))   (assign x (+ x 1)))",
+				"source": "node_12",
+				"target": "node_20",
+				"metadata": { "color": "#000000", "style": "NORMAL", "weight": "1", "font": "courier", "align": "LEFT" }
+			},
+			{
+				"label": "(CfaAction   (assume (< x 5))   (assign x (+ x 1)))",
+				"source": "node_20",
+				"target": "node_21",
+				"metadata": { "color": "#000000", "style": "NORMAL", "weight": "1", "font": "courier", "align": "LEFT" }
+			},
+			{
+				"label": "(CfaAction   (assume (< x 5))   (assign x (+ x 1)))",
+				"source": "node_21",
+				"target": "node_22",
+				"metadata": { "color": "#000000", "style": "NORMAL", "weight": "1", "font": "courier", "align": "LEFT" }
+			},
+			{
+				"label": "(CfaAction   (assume (< x 5))   (assign x (+ x 1)))",
+				"source": "node_22",
+				"target": "node_23",
+				"metadata": { "color": "#000000", "style": "NORMAL", "weight": "1", "font": "courier", "align": "LEFT" }
+			},
+			{
+				"label": "(CfaAction   (assume (< x 5))   (assign x (+ x 1)))",
+				"source": "node_23",
+				"target": "node_24",
+				"metadata": { "color": "#000000", "style": "NORMAL", "weight": "1", "font": "courier", "align": "LEFT" }
+			},
+			{
+				"label": "(CfaAction   (assume (not (< x 5))))",
+				"source": "node_24",
+				"target": "node_26",
+				"metadata": { "color": "#000000", "style": "NORMAL", "weight": "1", "font": "courier", "align": "LEFT" }
+			},
+			{
+				"label": "(CfaAction   (assume (< x 5))   (assign x (+ x 1)))",
+				"source": "node_24",
+				"target": "node_25",
+				"metadata": { "color": "#000000", "style": "NORMAL", "weight": "1", "font": "courier", "align": "LEFT" }
+			},
+			{
+				"label": "(CfaAction   (assume (not (<= x 5))))",
+				"source": "node_26",
+				"target": "node_28",
+				"metadata": { "color": "#000000", "style": "NORMAL", "weight": "1", "font": "courier", "align": "LEFT" }
+			},
+			{
+				"label": "(CfaAction   (assume (<= x 5)))",
+				"source": "node_26",
+				"target": "node_27",
+				"metadata": { "color": "#000000", "style": "NORMAL", "weight": "1", "font": "courier", "align": "LEFT" }
+			},
+			{
+				"label": "",
+				"source": "node_25",
+				"target": "node_24",
+				"metadata": { "color": "#000000", "style": "DASHED", "weight": "0", "font": "", "align": "CENTER" }
+			},
+			{
+				"label": "",
+				"source": "phantom_init0",
+				"target": "node_0",
+				"metadata": { "color": "#000000", "style": "NORMAL", "weight": "1", "font": "", "align": "CENTER" }
+			}
+		]
+	}
+}
