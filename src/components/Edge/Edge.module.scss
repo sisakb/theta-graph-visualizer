@@ -54,6 +54,18 @@ $line-color-hover: darkgoldenrod;
 			color: $line-color-hover
 		}
 	}
+
+	&.dashed {
+		.line {
+			background: repeating-linear-gradient(
+				90deg,
+				$line-color 0%,
+				$line-color 10%,
+				transparent 10%,
+				transparent 20%
+			);
+		}
+	}
 }
 
 .edgeInfo {

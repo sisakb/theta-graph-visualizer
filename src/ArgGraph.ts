@@ -107,6 +107,28 @@ export class ArgNode {
 		return this.inEdges.find((edge) => !edge.backtrack)?.source ?? null
 	}
 
+	get routeFromRoot(): ArgEdge[] {
+		const parentEdge = this.inEdges.find((edge) => !edge.backtrack)
+		if (!parentEdge) {
+			return []
+		}
+		const parent = parentEdge?.source
+		if (parent.isInitial) {
+			return []
+		} else {
+			return [parentEdge, ...parentEdge.source.routeFromRoot]
+		}
+	}
+
+	public hasSameRouteFromRoot(other: ArgNode): boolean {
+		const route = this.routeFromRoot
+		const otherRoute = other.routeFromRoot
+		if (route.length !== otherRoute.length) {
+			return false
+		}
+		return route.every((edge, index) => edge.label === otherRoute[index].label)
+	}
+
 	get children(): ArgNode[] {
 		return this.outEdges.filter((edge) => !edge.backtrack).map((edge) => edge.target).sort((a, b) => a.label.localeCompare(b.label)) ?? []
 	}

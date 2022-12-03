@@ -18,17 +18,23 @@ const Edge = ({ from, to, index, maxIndex, edge }: EdgeProps) => {
 	const [hovered, setHovered] = useState(false)
 
 	const fromPos = useMemo(
-		() => ({
+		() => (!edge.backtrack ? {
 			x: from.offsetLeft + from.offsetWidth / 2 + (index - maxIndex / 2) * 20 + 10,
 			y: from.offsetTop + from.offsetHeight,
+		} : {
+			x: from.offsetLeft + from.offsetWidth / 2 - 30,
+			y: from.offsetTop,
 		}),
 		[from, index]
 	)
 
 	const toPos = useMemo(
-		() => ({
+		() => (!edge.backtrack ? {
 			x: to.offsetLeft + to.offsetWidth / 2,
 			y: to.offsetTop,
+		} : {
+			x: to.offsetLeft + to.offsetWidth / 2 + (index - maxIndex / 2) * 20 + 10 - 30,
+			y: to.offsetTop + to.offsetHeight,
 		}),
 		[to]
 	)
@@ -43,7 +49,7 @@ const Edge = ({ from, to, index, maxIndex, edge }: EdgeProps) => {
 			<div
 				onMouseEnter={() => setHovered(true)}
 				onMouseLeave={() => setHovered(false)}
-				className={`${styles.edge} ${hovered ? styles.hovered : ""}`}
+				className={`${styles.edge} ${hovered ? styles.hovered : ""} ${edge.backtrack ? styles.dashed : ""}`}
 				style={{
 					position: "absolute",
 					left: fromPos.x,

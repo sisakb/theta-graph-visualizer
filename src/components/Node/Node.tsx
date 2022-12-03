@@ -36,7 +36,7 @@ const Node = ({ nodeDrawing, graphId, onHover, hovered, selected, onSelect }: No
 			{!node.isInitial && (
 				<div className={`${styles.node} ${node.isError ? styles.errorNode : ""}`}>
 					{stateName}
-					<div>
+					<div className={styles.predicates}>
 						{predicates.map((p) => (
 							<div key={p}>{p}</div>
 						))}

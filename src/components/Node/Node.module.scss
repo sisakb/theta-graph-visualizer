@@ -2,6 +2,7 @@
 
 	overflow: hidden;
 	width: 150px;
+	min-height: 80px;
 	height: 80px;
 	display: flex;
 	flex-direction: column;
@@ -9,7 +10,8 @@
 	justify-content: flex-end;
 	opacity: 0.5;
 	cursor: default;
-	transition: all 0.1s ease-in-out;
+	//transition: all 0.1s ease-in-out;
+
 
 	.initialNode {
 		background-color: black;
@@ -23,14 +25,15 @@
 		border: 2px solid #000;
 		border-radius: 5px;
 		padding: 10px;
-		
+		min-height: 80px;
 		width: 100%;
-		height: 100%;
+		height: 80px;
+
 		text-align: center;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		justify-content: center;
+		justify-content: flex-start;
 		cursor: pointer;
 
 		&.errorNode::after {
@@ -40,14 +43,24 @@
 			height: calc(100% - 13px);
 			border-radius: 3px;
 			border: 2px solid #000;
+			top: 5px;
+			left: 5px;
 		}
 
 	}
+
+	&:hover {
+		height: fit-content;
+		& .node {
+			height: fit-content;
+			z-index: 999;
+		}
+	}
 	
 	&.hovered {
-		opacity: 0.9;
+		opacity: 0.8;
 		& .node {
-			background-color: rgba(194, 131, 83, 0.169);
+			background-color: #d6edf0;
 			border: 2px solid darken($color: lightslategray, $amount: 30%);
 			&.errorNode {
 				background-color: rgb(241, 167, 167);
@@ -57,18 +70,12 @@
 				}
 			}
 		}
-		&:hover {
-			opacity: 1;
-			&.node {
-				background-color: rgba(194, 131, 83, 0.3);;
-			}
-		}
 	}
 
 	&.selected {
 		opacity: 1;
 		& .node {
-			background-color: rgba(194, 131, 83, 0.5);
+			background-color: #a0d4db;
 			border: 2px solid darken($color: lightslategray, $amount: 30%);
 			&.errorNode {
 				background-color: rgb(241, 167, 167);

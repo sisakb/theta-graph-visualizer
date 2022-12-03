@@ -97,15 +97,17 @@ const Graph = ({
 				{[...treeDrawing.nodes.values()].map((drawingNode, index) => (
 					<Node
 						hovered={
-							hoveredNode?.stateName ===
-							drawingNode.node.stateName
+							hoveredNode?.hasSameRouteFromRoot(
+								drawingNode.node
+							) ?? false
 						}
 						onHover={setHoveredNode}
 						selected={
-							selectedNode?.stateName ===
-							drawingNode.node.stateName
+							selectedNode?.hasSameRouteFromRoot(
+								drawingNode.node
+							) ?? false
 						}
-						onSelect={setSelectedNode}
+						onSelect={node => setSelectedNode(selectedNode === node ? null : node)}
 						nodeDrawing={drawingNode}
 						key={index}
 						graphId={id}
@@ -113,7 +115,6 @@ const Graph = ({
 				))}
 
 				{argGraph.edges
-					.filter((edge) => !edge.backtrack)
 					.map((edge, key) => {
 						const siblingEdges = argGraph.edges
 							.filter(
