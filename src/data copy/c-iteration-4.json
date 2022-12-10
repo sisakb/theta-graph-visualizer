@@ -1,0 +1,35 @@
+{"iteration": 4, "arg": {
+	"$schema": "https://jsongraphformat.info/v2.0/json-graph-schema.json",
+	"graph": {
+		"directed": true,
+		"type": "arg",
+		"nodes": {
+			"node_0": {
+				"label": "(CfaState L0   (PredState))",
+				"metadata": { "style": "NORMAL", "color": "#000000", "fill": "#FFFFFF", "font": "courier", "align": "LEFT", "shape": "RECTANGLE", "peripheries": "1" }
+			},
+			"node_12": {
+				"label": "(CfaState L1   (PredState (not (>= x 5))              (<= x 0)              (<= x 1)))",
+				"metadata": { "style": "NORMAL", "color": "#000000", "fill": "#FFFFFF", "font": "courier", "align": "LEFT", "shape": "RECTANGLE", "peripheries": "1" }
+			},
+			"phantom_init0": {
+				"label": "",
+				"metadata": { "style": "NORMAL", "color": "#FFFFFF", "fill": "#FFFFFF", "font": "", "align": "CENTER", "shape": "ELLIPSE", "peripheries": "1" }
+			}
+		},
+		"edges": [
+			{
+				"label": "(CfaAction   (assign x 0))",
+				"source": "node_0",
+				"target": "node_12",
+				"metadata": { "color": "#000000", "style": "NORMAL", "weight": "1", "font": "courier", "align": "LEFT" }
+			},
+			{
+				"label": "",
+				"source": "phantom_init0",
+				"target": "node_0",
+				"metadata": { "color": "#000000", "style": "NORMAL", "weight": "1", "font": "", "align": "CENTER" }
+			}
+		]
+	}
+}, "precision": "(GlobalCfaPrec (PredPrec (>= x 5) (<= x 0) (<= x 1) (<= x 2) (<= x 3) (<= x 4) (<= x 5)))", "refinerResult": "(RefinerResult Spurious)"}

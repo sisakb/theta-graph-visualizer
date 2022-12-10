@@ -1,4 +1,14 @@
 .nodeContainer {
+	width: 150px;
+	min-height: 80px;
+	.initialNode {
+		background-color: black;
+		border-radius: 100%;
+		width: 20px;
+		height: 20px;
+	}
+}
+/*
 
 	overflow: hidden;
 	width: 150px;
@@ -8,10 +18,7 @@
 	flex-direction: column;
 	align-items: center;
 	justify-content: flex-end;
-	opacity: 0.5;
 	cursor: default;
-	//transition: all 0.1s ease-in-out;
-
 
 	.initialNode {
 		background-color: black;
@@ -34,7 +41,6 @@
 		flex-direction: column;
 		align-items: center;
 		justify-content: flex-start;
-		cursor: pointer;
 
 		&.errorNode::after {
 			content: "";
@@ -54,7 +60,9 @@
 		& .node {
 			height: fit-content;
 			z-index: 999;
+			background-color: #fff;
 		}
+		opacity: 1;
 	}
 	
 	&.hovered {
@@ -87,3 +95,4 @@
 		}
 	}
 }
+*/

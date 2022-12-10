@@ -1,4 +1,4 @@
-import { IJSONEdge, IJSONGraph, IJSONNode } from "./IJSONGraph"
+import { IJSONEdge, IJSONGraph, IJSONNode } from "../IJSONGraph"
 
 export class ArgEdge {
 	public readonly source: ArgNode

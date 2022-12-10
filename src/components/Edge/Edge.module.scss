@@ -2,8 +2,8 @@ $line-width: 2px;
 $arrow-angle: 30deg;
 $arrow-size: 15px;
 
-$line-color: rgb(161, 161, 161);
-$line-color-hover: darkgoldenrod;
+$line-color: rgb(131, 131, 131);
+$line-color-hover: rgb(0, 0, 0);
 
 .edge {
 	position: absolute;
@@ -16,7 +16,6 @@ $line-color-hover: darkgoldenrod;
 		position: absolute;
 		width: 100%;
 		height: $line-width;
-		background-color: $line-color;
 		top: 50%;
 		left: 0;
 		transform: translateY(-50%);
@@ -41,17 +40,33 @@ $line-color-hover: darkgoldenrod;
 		transform-origin: right;
 		background-color: $line-color;
 	}
-	&.hovered {
+	&.hovered:not(.dashed) {
 		.line, .arrowTop, .arrowBottom {
 			background-color: $line-color-hover;
 			height: $line-width + 1px;
 		}
-		& + div {
+		& + div.edgeLabel {
 			opacity: 1;
-			background-color: rgba(253, 253, 253, 0.9);
-			border: 2px solid $line-color-hover;
+			background-color: rgba(253, 253, 253, 0.97);
+			outline: 2px solid $line-color-hover;
 			z-index: 2;
 			color: $line-color-hover
+		}
+	}
+	&.hovered.dashed {
+		.line {
+			background: repeating-linear-gradient(
+				90deg,
+				$line-color-hover 0%,
+				$line-color-hover 10%,
+				transparent 10%,
+				transparent 20%
+			);
+			height: $line-width + 1px;
+		}
+		.arrowTop, .arrowBottom {
+			background-color: $line-color-hover;
+			height: $line-width + 1px;
 		}
 	}
 
@@ -72,7 +87,6 @@ $line-color-hover: darkgoldenrod;
 	display: none;
 	position: absolute;
 	font-size: 12px;
-	opacity: 0.6;
 	background-color: rgb(200, 200, 200);
 	padding: 2px 4px;		
 }

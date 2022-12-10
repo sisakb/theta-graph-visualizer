@@ -1,38 +1,1224 @@
-{
-	"$schema": "https://jsongraphformat.info/v2.0/json-graph-schema.json",
-	"graph": {
-		"nodes": {
-			"A": { "label": "A" },
-			"B": { "label": "B" },
-			"C": { "label": "C" },
-			"D": { "label": "D" },
-			"E": { "label": "E" },
-			"F": { "label": "F" },
-			"G": { "label": "G" },
-			"H": { "label": "H" },
-			"I": { "label": "I" },
-			"J": { "label": "J" },
-			"K": { "label": "K" },
-			"L": { "label": "L" },
-			"M": { "label": "M" },
-			"N": { "label": "N" },
-			"O": { "label": "O" }
+[
+	{
+		"iteration": 1,
+		"arg": {
+			"graph": {
+				"directed": true,
+				"type": "arg",
+				"nodes": {
+					"node_0": {
+						"label": "(CfaState L0   (PredState))",
+						"metadata": {
+							"style": "NORMAL",
+							"color": "#000000",
+							"fill": "#FFFFFF",
+							"font": "courier",
+							"align": "LEFT",
+							"shape": "RECTANGLE",
+							"peripheries": "1"
+						}
+					},
+					"node_1": {
+						"label": "(CfaState L1   (PredState))",
+						"metadata": {
+							"style": "NORMAL",
+							"color": "#000000",
+							"fill": "#FFFFFF",
+							"font": "courier",
+							"align": "LEFT",
+							"shape": "RECTANGLE",
+							"peripheries": "1"
+						}
+					},
+					"node_2": {
+						"label": "(CfaState L1   (PredState))",
+						"metadata": {
+							"style": "NORMAL",
+							"color": "#000000",
+							"fill": "#FFFFFF",
+							"font": "courier",
+							"align": "LEFT",
+							"shape": "RECTANGLE",
+							"peripheries": "1"
+						}
+					},
+					"node_3": {
+						"label": "(CfaState L3   (PredState))",
+						"metadata": {
+							"style": "NORMAL",
+							"color": "#000000",
+							"fill": "#FFFFFF",
+							"font": "courier",
+							"align": "LEFT",
+							"shape": "RECTANGLE",
+							"peripheries": "1"
+						}
+					},
+					"node_4": {
+						"label": "(CfaState END   (PredState))",
+						"metadata": {
+							"style": "NORMAL",
+							"color": "#000000",
+							"fill": "#FFFFFF",
+							"font": "courier",
+							"align": "LEFT",
+							"shape": "RECTANGLE",
+							"peripheries": "1"
+						}
+					},
+					"node_5": {
+						"label": "(CfaState ERR   (PredState))",
+						"metadata": {
+							"style": "NORMAL",
+							"color": "#000000",
+							"fill": "#FFFFFF",
+							"font": "courier",
+							"align": "LEFT",
+							"shape": "RECTANGLE",
+							"peripheries": "2"
+						}
+					},
+					"phantom_init0": {
+						"label": "",
+						"metadata": {
+							"style": "NORMAL",
+							"color": "#FFFFFF",
+							"fill": "#FFFFFF",
+							"font": "",
+							"align": "CENTER",
+							"shape": "ELLIPSE",
+							"peripheries": "1"
+						}
+					}
+				},
+				"edges": [
+					{
+						"label": "(CfaAction   (assign x 0))",
+						"source": "node_0",
+						"target": "node_1",
+						"metadata": {
+							"color": "#000000",
+							"style": "NORMAL",
+							"weight": "1",
+							"font": "courier",
+							"align": "LEFT"
+						}
+					},
+					{
+						"label": "(CfaAction   (assume (< x 5))   (assign x (+ x 1)))",
+						"source": "node_1",
+						"target": "node_2",
+						"metadata": {
+							"color": "#000000",
+							"style": "NORMAL",
+							"weight": "1",
+							"font": "courier",
+							"align": "LEFT"
+						}
+					},
+					{
+						"label": "(CfaAction   (assume (not (< x 5))))",
+						"source": "node_1",
+						"target": "node_3",
+						"metadata": {
+							"color": "#000000",
+							"style": "NORMAL",
+							"weight": "1",
+							"font": "courier",
+							"align": "LEFT"
+						}
+					},
+					{
+						"label": "",
+						"source": "node_2",
+						"target": "node_1",
+						"metadata": {
+							"color": "#000000",
+							"style": "DASHED",
+							"weight": "0",
+							"font": "",
+							"align": "CENTER"
+						}
+					},
+					{
+						"label": "(CfaAction   (assume (<= x 5)))",
+						"source": "node_3",
+						"target": "node_4",
+						"metadata": {
+							"color": "#000000",
+							"style": "NORMAL",
+							"weight": "1",
+							"font": "courier",
+							"align": "LEFT"
+						}
+					},
+					{
+						"label": "(CfaAction   (assume (not (<= x 5))))",
+						"source": "node_3",
+						"target": "node_5",
+						"metadata": {
+							"color": "#000000",
+							"style": "NORMAL",
+							"weight": "1",
+							"font": "courier",
+							"align": "LEFT"
+						}
+					},
+					{
+						"label": "",
+						"source": "phantom_init0",
+						"target": "node_0",
+						"metadata": {
+							"color": "#000000",
+							"style": "NORMAL",
+							"weight": "1",
+							"font": "",
+							"align": "CENTER"
+						}
+					}
+				]
+			}
 		},
-		"edges": [
-			{ "source": "O", "target": "E" },
-			{ "source": "O", "target": "F" },
-			{ "source": "O", "target": "N" },
-			{ "source": "E", "target": "A" },
-			{ "source": "E", "target": "D" },
-			{ "source": "D", "target": "B" },
-			{ "source": "D", "target": "C" },
-			{ "source": "N", "target": "G" },
-			{ "source": "N", "target": "M" },
-			{ "source": "M", "target": "H" },
-			{ "source": "M", "target": "I" },
-			{ "source": "M", "target": "J" },
-			{ "source": "M", "target": "K" },
-			{ "source": "M", "target": "L" }
-		]
+		"precision": "(GlobalCfaPrec (PredPrec))"
+	},
+	{
+		"iteration": 2,
+		"arg": {
+			"graph": {
+				"directed": true,
+				"type": "arg",
+				"nodes": {
+					"node_0": {
+						"label": "(CfaState L0   (PredState))",
+						"metadata": {
+							"style": "NORMAL",
+							"color": "#000000",
+							"fill": "#FFFFFF",
+							"font": "courier",
+							"align": "LEFT",
+							"shape": "RECTANGLE",
+							"peripheries": "1"
+						}
+					},
+					"node_6": {
+						"label": "(CfaState L1   (PredState (not (>= x 5))))",
+						"metadata": {
+							"style": "NORMAL",
+							"color": "#000000",
+							"fill": "#FFFFFF",
+							"font": "courier",
+							"align": "LEFT",
+							"shape": "RECTANGLE",
+							"peripheries": "1"
+						}
+					},
+					"node_7": {
+						"label": "(CfaState L1   (PredState))",
+						"metadata": {
+							"style": "NORMAL",
+							"color": "#000000",
+							"fill": "#FFFFFF",
+							"font": "courier",
+							"align": "LEFT",
+							"shape": "RECTANGLE",
+							"peripheries": "1"
+						}
+					},
+					"node_9": {
+						"label": "(CfaState L3   (PredState (>= x 5)))",
+						"metadata": {
+							"style": "NORMAL",
+							"color": "#000000",
+							"fill": "#FFFFFF",
+							"font": "courier",
+							"align": "LEFT",
+							"shape": "RECTANGLE",
+							"peripheries": "1"
+						}
+					},
+					"node_11": {
+						"label": "(CfaState ERR   (PredState (>= x 5)))",
+						"metadata": {
+							"style": "NORMAL",
+							"color": "#000000",
+							"fill": "#FFFFFF",
+							"font": "courier",
+							"align": "LEFT",
+							"shape": "RECTANGLE",
+							"peripheries": "2"
+						}
+					},
+					"node_10": {
+						"label": "(CfaState END   (PredState (>= x 5)))",
+						"metadata": {
+							"style": "NORMAL",
+							"color": "#000000",
+							"fill": "#FFFFFF",
+							"font": "courier",
+							"align": "LEFT",
+							"shape": "RECTANGLE",
+							"peripheries": "1"
+						}
+					},
+					"node_8": {
+						"label": "(CfaState L1   (PredState))",
+						"metadata": {
+							"style": "NORMAL",
+							"color": "#000000",
+							"fill": "#FFFFFF",
+							"font": "courier",
+							"align": "LEFT",
+							"shape": "RECTANGLE",
+							"peripheries": "1"
+						}
+					},
+					"phantom_init0": {
+						"label": "",
+						"metadata": {
+							"style": "NORMAL",
+							"color": "#FFFFFF",
+							"fill": "#FFFFFF",
+							"font": "",
+							"align": "CENTER",
+							"shape": "ELLIPSE",
+							"peripheries": "1"
+						}
+					}
+				},
+				"edges": [
+					{
+						"label": "(CfaAction   (assign x 0))",
+						"source": "node_0",
+						"target": "node_6",
+						"metadata": {
+							"color": "#000000",
+							"style": "NORMAL",
+							"weight": "1",
+							"font": "courier",
+							"align": "LEFT"
+						}
+					},
+					{
+						"label": "(CfaAction   (assume (< x 5))   (assign x (+ x 1)))",
+						"source": "node_6",
+						"target": "node_7",
+						"metadata": {
+							"color": "#000000",
+							"style": "NORMAL",
+							"weight": "1",
+							"font": "courier",
+							"align": "LEFT"
+						}
+					},
+					{
+						"label": "(CfaAction   (assume (not (< x 5))))",
+						"source": "node_7",
+						"target": "node_9",
+						"metadata": {
+							"color": "#000000",
+							"style": "NORMAL",
+							"weight": "1",
+							"font": "courier",
+							"align": "LEFT"
+						}
+					},
+					{
+						"label": "(CfaAction   (assume (< x 5))   (assign x (+ x 1)))",
+						"source": "node_7",
+						"target": "node_8",
+						"metadata": {
+							"color": "#000000",
+							"style": "NORMAL",
+							"weight": "1",
+							"font": "courier",
+							"align": "LEFT"
+						}
+					},
+					{
+						"label": "(CfaAction   (assume (not (<= x 5))))",
+						"source": "node_9",
+						"target": "node_11",
+						"metadata": {
+							"color": "#000000",
+							"style": "NORMAL",
+							"weight": "1",
+							"font": "courier",
+							"align": "LEFT"
+						}
+					},
+					{
+						"label": "(CfaAction   (assume (<= x 5)))",
+						"source": "node_9",
+						"target": "node_10",
+						"metadata": {
+							"color": "#000000",
+							"style": "NORMAL",
+							"weight": "1",
+							"font": "courier",
+							"align": "LEFT"
+						}
+					},
+					{
+						"label": "",
+						"source": "node_8",
+						"target": "node_7",
+						"metadata": {
+							"color": "#000000",
+							"style": "DASHED",
+							"weight": "0",
+							"font": "",
+							"align": "CENTER"
+						}
+					},
+					{
+						"label": "",
+						"source": "phantom_init0",
+						"target": "node_0",
+						"metadata": {
+							"color": "#000000",
+							"style": "NORMAL",
+							"weight": "1",
+							"font": "",
+							"align": "CENTER"
+						}
+					}
+				]
+			}
+		},
+		"precision": "(GlobalCfaPrec (PredPrec (>= x 5)))"
+	},
+	{
+		"iteration": 3,
+		"arg": {
+			"graph": {
+				"directed": true,
+				"type": "arg",
+				"nodes": {
+					"node_0": {
+						"label": "(CfaState L0   (PredState))",
+						"metadata": {
+							"style": "NORMAL",
+							"color": "#000000",
+							"fill": "#FFFFFF",
+							"font": "courier",
+							"align": "LEFT",
+							"shape": "RECTANGLE",
+							"peripheries": "1"
+						}
+					},
+					"node_12": {
+						"label": "(CfaState L1   (PredState (not (>= x 5))              (<= x 0)              (<= x 1)))",
+						"metadata": {
+							"style": "NORMAL",
+							"color": "#000000",
+							"fill": "#FFFFFF",
+							"font": "courier",
+							"align": "LEFT",
+							"shape": "RECTANGLE",
+							"peripheries": "1"
+						}
+					},
+					"node_13": {
+						"label": "(CfaState L1   (PredState (not (>= x 5))              (<= x 1)))",
+						"metadata": {
+							"style": "NORMAL",
+							"color": "#000000",
+							"fill": "#FFFFFF",
+							"font": "courier",
+							"align": "LEFT",
+							"shape": "RECTANGLE",
+							"peripheries": "1"
+						}
+					},
+					"node_14": {
+						"label": "(CfaState L1   (PredState (not (>= x 5))))",
+						"metadata": {
+							"style": "NORMAL",
+							"color": "#000000",
+							"fill": "#FFFFFF",
+							"font": "courier",
+							"align": "LEFT",
+							"shape": "RECTANGLE",
+							"peripheries": "1"
+						}
+					},
+					"node_15": {
+						"label": "(CfaState L1   (PredState))",
+						"metadata": {
+							"style": "NORMAL",
+							"color": "#000000",
+							"fill": "#FFFFFF",
+							"font": "courier",
+							"align": "LEFT",
+							"shape": "RECTANGLE",
+							"peripheries": "1"
+						}
+					},
+					"node_17": {
+						"label": "(CfaState L3   (PredState (>= x 5)              (not (<= x 0))              (not (<= x 1))))",
+						"metadata": {
+							"style": "NORMAL",
+							"color": "#000000",
+							"fill": "#FFFFFF",
+							"font": "courier",
+							"align": "LEFT",
+							"shape": "RECTANGLE",
+							"peripheries": "1"
+						}
+					},
+					"node_19": {
+						"label": "(CfaState ERR   (PredState (>= x 5)              (not (<= x 0))              (not (<= x 1))))",
+						"metadata": {
+							"style": "NORMAL",
+							"color": "#000000",
+							"fill": "#FFFFFF",
+							"font": "courier",
+							"align": "LEFT",
+							"shape": "RECTANGLE",
+							"peripheries": "2"
+						}
+					},
+					"node_18": {
+						"label": "(CfaState END   (PredState (>= x 5)              (not (<= x 0))              (not (<= x 1))))",
+						"metadata": {
+							"style": "NORMAL",
+							"color": "#000000",
+							"fill": "#FFFFFF",
+							"font": "courier",
+							"align": "LEFT",
+							"shape": "RECTANGLE",
+							"peripheries": "1"
+						}
+					},
+					"node_16": {
+						"label": "(CfaState L1   (PredState))",
+						"metadata": {
+							"style": "NORMAL",
+							"color": "#000000",
+							"fill": "#FFFFFF",
+							"font": "courier",
+							"align": "LEFT",
+							"shape": "RECTANGLE",
+							"peripheries": "1"
+						}
+					},
+					"phantom_init0": {
+						"label": "",
+						"metadata": {
+							"style": "NORMAL",
+							"color": "#FFFFFF",
+							"fill": "#FFFFFF",
+							"font": "",
+							"align": "CENTER",
+							"shape": "ELLIPSE",
+							"peripheries": "1"
+						}
+					}
+				},
+				"edges": [
+					{
+						"label": "(CfaAction   (assign x 0))",
+						"source": "node_0",
+						"target": "node_12",
+						"metadata": {
+							"color": "#000000",
+							"style": "NORMAL",
+							"weight": "1",
+							"font": "courier",
+							"align": "LEFT"
+						}
+					},
+					{
+						"label": "(CfaAction   (assume (< x 5))   (assign x (+ x 1)))",
+						"source": "node_12",
+						"target": "node_13",
+						"metadata": {
+							"color": "#000000",
+							"style": "NORMAL",
+							"weight": "1",
+							"font": "courier",
+							"align": "LEFT"
+						}
+					},
+					{
+						"label": "(CfaAction   (assume (< x 5))   (assign x (+ x 1)))",
+						"source": "node_13",
+						"target": "node_14",
+						"metadata": {
+							"color": "#000000",
+							"style": "NORMAL",
+							"weight": "1",
+							"font": "courier",
+							"align": "LEFT"
+						}
+					},
+					{
+						"label": "(CfaAction   (assume (< x 5))   (assign x (+ x 1)))",
+						"source": "node_14",
+						"target": "node_15",
+						"metadata": {
+							"color": "#000000",
+							"style": "NORMAL",
+							"weight": "1",
+							"font": "courier",
+							"align": "LEFT"
+						}
+					},
+					{
+						"label": "(CfaAction   (assume (not (< x 5))))",
+						"source": "node_15",
+						"target": "node_17",
+						"metadata": {
+							"color": "#000000",
+							"style": "NORMAL",
+							"weight": "1",
+							"font": "courier",
+							"align": "LEFT"
+						}
+					},
+					{
+						"label": "(CfaAction   (assume (< x 5))   (assign x (+ x 1)))",
+						"source": "node_15",
+						"target": "node_16",
+						"metadata": {
+							"color": "#000000",
+							"style": "NORMAL",
+							"weight": "1",
+							"font": "courier",
+							"align": "LEFT"
+						}
+					},
+					{
+						"label": "(CfaAction   (assume (not (<= x 5))))",
+						"source": "node_17",
+						"target": "node_19",
+						"metadata": {
+							"color": "#000000",
+							"style": "NORMAL",
+							"weight": "1",
+							"font": "courier",
+							"align": "LEFT"
+						}
+					},
+					{
+						"label": "(CfaAction   (assume (<= x 5)))",
+						"source": "node_17",
+						"target": "node_18",
+						"metadata": {
+							"color": "#000000",
+							"style": "NORMAL",
+							"weight": "1",
+							"font": "courier",
+							"align": "LEFT"
+						}
+					},
+					{
+						"label": "",
+						"source": "node_16",
+						"target": "node_15",
+						"metadata": {
+							"color": "#000000",
+							"style": "DASHED",
+							"weight": "0",
+							"font": "",
+							"align": "CENTER"
+						}
+					},
+					{
+						"label": "",
+						"source": "phantom_init0",
+						"target": "node_0",
+						"metadata": {
+							"color": "#000000",
+							"style": "NORMAL",
+							"weight": "1",
+							"font": "",
+							"align": "CENTER"
+						}
+					}
+				]
+			}
+		},
+		"precision": "(GlobalCfaPrec (PredPrec (>= x 5) (<= x 0) (<= x 1)))"
+	},
+	{
+		"iteration": 4,
+		"arg": {
+			"graph": {
+				"directed": true,
+				"type": "arg",
+				"nodes": {
+					"node_0": {
+						"label": "(CfaState L0   (PredState))",
+						"metadata": {
+							"style": "NORMAL",
+							"color": "#000000",
+							"fill": "#FFFFFF",
+							"font": "courier",
+							"align": "LEFT",
+							"shape": "RECTANGLE",
+							"peripheries": "1"
+						}
+					},
+					"node_12": {
+						"label": "(CfaState L1   (PredState (not (>= x 5))              (<= x 0)              (<= x 1)))",
+						"metadata": {
+							"style": "NORMAL",
+							"color": "#000000",
+							"fill": "#FFFFFF",
+							"font": "courier",
+							"align": "LEFT",
+							"shape": "RECTANGLE",
+							"peripheries": "1"
+						}
+					},
+					"node_20": {
+						"label": "(CfaState L1   (PredState (not (>= x 5))              (<= x 1)              (<= x 2)              (<= x 3)))",
+						"metadata": {
+							"style": "NORMAL",
+							"color": "#000000",
+							"fill": "#FFFFFF",
+							"font": "courier",
+							"align": "LEFT",
+							"shape": "RECTANGLE",
+							"peripheries": "1"
+						}
+					},
+					"node_21": {
+						"label": "(CfaState L1   (PredState (not (>= x 5))              (<= x 2)              (<= x 3)))",
+						"metadata": {
+							"style": "NORMAL",
+							"color": "#000000",
+							"fill": "#FFFFFF",
+							"font": "courier",
+							"align": "LEFT",
+							"shape": "RECTANGLE",
+							"peripheries": "1"
+						}
+					},
+					"node_22": {
+						"label": "(CfaState L1   (PredState (not (>= x 5))              (<= x 3)))",
+						"metadata": {
+							"style": "NORMAL",
+							"color": "#000000",
+							"fill": "#FFFFFF",
+							"font": "courier",
+							"align": "LEFT",
+							"shape": "RECTANGLE",
+							"peripheries": "1"
+						}
+					},
+					"node_23": {
+						"label": "(CfaState L1   (PredState (not (>= x 5))))",
+						"metadata": {
+							"style": "NORMAL",
+							"color": "#000000",
+							"fill": "#FFFFFF",
+							"font": "courier",
+							"align": "LEFT",
+							"shape": "RECTANGLE",
+							"peripheries": "1"
+						}
+					},
+					"node_24": {
+						"label": "(CfaState L1   (PredState))",
+						"metadata": {
+							"style": "NORMAL",
+							"color": "#000000",
+							"fill": "#FFFFFF",
+							"font": "courier",
+							"align": "LEFT",
+							"shape": "RECTANGLE",
+							"peripheries": "1"
+						}
+					},
+					"node_26": {
+						"label": "(CfaState L3   (PredState (>= x 5)              (not (<= x 0))              (not (<= x 1))              (not (<= x 2))              (not (<= x 3))))",
+						"metadata": {
+							"style": "NORMAL",
+							"color": "#000000",
+							"fill": "#FFFFFF",
+							"font": "courier",
+							"align": "LEFT",
+							"shape": "RECTANGLE",
+							"peripheries": "1"
+						}
+					},
+					"node_28": {
+						"label": "(CfaState ERR   (PredState (>= x 5)              (not (<= x 0))              (not (<= x 1))              (not (<= x 2))              (not (<= x 3))))",
+						"metadata": {
+							"style": "NORMAL",
+							"color": "#000000",
+							"fill": "#FFFFFF",
+							"font": "courier",
+							"align": "LEFT",
+							"shape": "RECTANGLE",
+							"peripheries": "2"
+						}
+					},
+					"node_27": {
+						"label": "(CfaState END   (PredState (>= x 5)              (not (<= x 0))              (not (<= x 1))              (not (<= x 2))              (not (<= x 3))))",
+						"metadata": {
+							"style": "NORMAL",
+							"color": "#000000",
+							"fill": "#FFFFFF",
+							"font": "courier",
+							"align": "LEFT",
+							"shape": "RECTANGLE",
+							"peripheries": "1"
+						}
+					},
+					"node_25": {
+						"label": "(CfaState L1   (PredState))",
+						"metadata": {
+							"style": "NORMAL",
+							"color": "#000000",
+							"fill": "#FFFFFF",
+							"font": "courier",
+							"align": "LEFT",
+							"shape": "RECTANGLE",
+							"peripheries": "1"
+						}
+					},
+					"phantom_init0": {
+						"label": "",
+						"metadata": {
+							"style": "NORMAL",
+							"color": "#FFFFFF",
+							"fill": "#FFFFFF",
+							"font": "",
+							"align": "CENTER",
+							"shape": "ELLIPSE",
+							"peripheries": "1"
+						}
+					}
+				},
+				"edges": [
+					{
+						"label": "(CfaAction   (assign x 0))",
+						"source": "node_0",
+						"target": "node_12",
+						"metadata": {
+							"color": "#000000",
+							"style": "NORMAL",
+							"weight": "1",
+							"font": "courier",
+							"align": "LEFT"
+						}
+					},
+					{
+						"label": "(CfaAction   (assume (< x 5))   (assign x (+ x 1)))",
+						"source": "node_12",
+						"target": "node_20",
+						"metadata": {
+							"color": "#000000",
+							"style": "NORMAL",
+							"weight": "1",
+							"font": "courier",
+							"align": "LEFT"
+						}
+					},
+					{
+						"label": "(CfaAction   (assume (< x 5))   (assign x (+ x 1)))",
+						"source": "node_20",
+						"target": "node_21",
+						"metadata": {
+							"color": "#000000",
+							"style": "NORMAL",
+							"weight": "1",
+							"font": "courier",
+							"align": "LEFT"
+						}
+					},
+					{
+						"label": "(CfaAction   (assume (< x 5))   (assign x (+ x 1)))",
+						"source": "node_21",
+						"target": "node_22",
+						"metadata": {
+							"color": "#000000",
+							"style": "NORMAL",
+							"weight": "1",
+							"font": "courier",
+							"align": "LEFT"
+						}
+					},
+					{
+						"label": "(CfaAction   (assume (< x 5))   (assign x (+ x 1)))",
+						"source": "node_22",
+						"target": "node_23",
+						"metadata": {
+							"color": "#000000",
+							"style": "NORMAL",
+							"weight": "1",
+							"font": "courier",
+							"align": "LEFT"
+						}
+					},
+					{
+						"label": "(CfaAction   (assume (< x 5))   (assign x (+ x 1)))",
+						"source": "node_23",
+						"target": "node_24",
+						"metadata": {
+							"color": "#000000",
+							"style": "NORMAL",
+							"weight": "1",
+							"font": "courier",
+							"align": "LEFT"
+						}
+					},
+					{
+						"label": "(CfaAction   (assume (not (< x 5))))",
+						"source": "node_24",
+						"target": "node_26",
+						"metadata": {
+							"color": "#000000",
+							"style": "NORMAL",
+							"weight": "1",
+							"font": "courier",
+							"align": "LEFT"
+						}
+					},
+					{
+						"label": "(CfaAction   (assume (< x 5))   (assign x (+ x 1)))",
+						"source": "node_24",
+						"target": "node_25",
+						"metadata": {
+							"color": "#000000",
+							"style": "NORMAL",
+							"weight": "1",
+							"font": "courier",
+							"align": "LEFT"
+						}
+					},
+					{
+						"label": "(CfaAction   (assume (not (<= x 5))))",
+						"source": "node_26",
+						"target": "node_28",
+						"metadata": {
+							"color": "#000000",
+							"style": "NORMAL",
+							"weight": "1",
+							"font": "courier",
+							"align": "LEFT"
+						}
+					},
+					{
+						"label": "(CfaAction   (assume (<= x 5)))",
+						"source": "node_26",
+						"target": "node_27",
+						"metadata": {
+							"color": "#000000",
+							"style": "NORMAL",
+							"weight": "1",
+							"font": "courier",
+							"align": "LEFT"
+						}
+					},
+					{
+						"label": "",
+						"source": "node_25",
+						"target": "node_24",
+						"metadata": {
+							"color": "#000000",
+							"style": "DASHED",
+							"weight": "0",
+							"font": "",
+							"align": "CENTER"
+						}
+					},
+					{
+						"label": "",
+						"source": "phantom_init0",
+						"target": "node_0",
+						"metadata": {
+							"color": "#000000",
+							"style": "NORMAL",
+							"weight": "1",
+							"font": "",
+							"align": "CENTER"
+						}
+					}
+				]
+			}
+		},
+		"precision": "(GlobalCfaPrec (PredPrec (>= x 5) (<= x 0) (<= x 1) (<= x 2) (<= x 3)))"
+	},
+	{
+		"iteration": 5,
+		"arg": {
+			"graph": {
+				"directed": true,
+				"type": "arg",
+				"nodes": {
+					"node_0": {
+						"label": "(CfaState L0   (PredState))",
+						"metadata": {
+							"style": "NORMAL",
+							"color": "#000000",
+							"fill": "#FFFFFF",
+							"font": "courier",
+							"align": "LEFT",
+							"shape": "RECTANGLE",
+							"peripheries": "1"
+						}
+					},
+					"node_12": {
+						"label": "(CfaState L1   (PredState (not (>= x 5))              (<= x 0)              (<= x 1)))",
+						"metadata": {
+							"style": "NORMAL",
+							"color": "#000000",
+							"fill": "#FFFFFF",
+							"font": "courier",
+							"align": "LEFT",
+							"shape": "RECTANGLE",
+							"peripheries": "1"
+						}
+					},
+					"node_29": {
+						"label": "(CfaState L1   (PredState (not (>= x 5))              (<= x 1)              (<= x 2)              (<= x 3)              (<= x 4)              (<= x 5)))",
+						"metadata": {
+							"style": "NORMAL",
+							"color": "#000000",
+							"fill": "#FFFFFF",
+							"font": "courier",
+							"align": "LEFT",
+							"shape": "RECTANGLE",
+							"peripheries": "1"
+						}
+					},
+					"node_30": {
+						"label": "(CfaState L1   (PredState (not (>= x 5))              (<= x 2)              (<= x 3)              (<= x 4)              (<= x 5)))",
+						"metadata": {
+							"style": "NORMAL",
+							"color": "#000000",
+							"fill": "#FFFFFF",
+							"font": "courier",
+							"align": "LEFT",
+							"shape": "RECTANGLE",
+							"peripheries": "1"
+						}
+					},
+					"node_31": {
+						"label": "(CfaState L1   (PredState (not (>= x 5))              (<= x 3)              (<= x 4)              (<= x 5)))",
+						"metadata": {
+							"style": "NORMAL",
+							"color": "#000000",
+							"fill": "#FFFFFF",
+							"font": "courier",
+							"align": "LEFT",
+							"shape": "RECTANGLE",
+							"peripheries": "1"
+						}
+					},
+					"node_32": {
+						"label": "(CfaState L1   (PredState (not (>= x 5))              (<= x 4)              (<= x 5)))",
+						"metadata": {
+							"style": "NORMAL",
+							"color": "#000000",
+							"fill": "#FFFFFF",
+							"font": "courier",
+							"align": "LEFT",
+							"shape": "RECTANGLE",
+							"peripheries": "1"
+						}
+					},
+					"node_33": {
+						"label": "(CfaState L1   (PredState (<= x 5)))",
+						"metadata": {
+							"style": "NORMAL",
+							"color": "#000000",
+							"fill": "#FFFFFF",
+							"font": "courier",
+							"align": "LEFT",
+							"shape": "RECTANGLE",
+							"peripheries": "1"
+						}
+					},
+					"node_34": {
+						"label": "(CfaState L1   (PredState (<= x 5)))",
+						"metadata": {
+							"style": "NORMAL",
+							"color": "#000000",
+							"fill": "#FFFFFF",
+							"font": "courier",
+							"align": "LEFT",
+							"shape": "RECTANGLE",
+							"peripheries": "1"
+						}
+					},
+					"node_35": {
+						"label": "(CfaState L3   (PredState (>= x 5)              (not (<= x 0))              (not (<= x 1))              (not (<= x 2))              (not (<= x 3))              (not (<= x 4))              (<= x 5)))",
+						"metadata": {
+							"style": "NORMAL",
+							"color": "#000000",
+							"fill": "#FFFFFF",
+							"font": "courier",
+							"align": "LEFT",
+							"shape": "RECTANGLE",
+							"peripheries": "1"
+						}
+					},
+					"node_36": {
+						"label": "(CfaState END   (PredState (>= x 5)              (not (<= x 0))              (not (<= x 1))              (not (<= x 2))              (not (<= x 3))              (not (<= x 4))              (<= x 5)))",
+						"metadata": {
+							"style": "NORMAL",
+							"color": "#000000",
+							"fill": "#FFFFFF",
+							"font": "courier",
+							"align": "LEFT",
+							"shape": "RECTANGLE",
+							"peripheries": "1"
+						}
+					},
+					"phantom_init0": {
+						"label": "",
+						"metadata": {
+							"style": "NORMAL",
+							"color": "#FFFFFF",
+							"fill": "#FFFFFF",
+							"font": "",
+							"align": "CENTER",
+							"shape": "ELLIPSE",
+							"peripheries": "1"
+						}
+					}
+				},
+				"edges": [
+					{
+						"label": "(CfaAction   (assign x 0))",
+						"source": "node_0",
+						"target": "node_12",
+						"metadata": {
+							"color": "#000000",
+							"style": "NORMAL",
+							"weight": "1",
+							"font": "courier",
+							"align": "LEFT"
+						}
+					},
+					{
+						"label": "(CfaAction   (assume (< x 5))   (assign x (+ x 1)))",
+						"source": "node_12",
+						"target": "node_29",
+						"metadata": {
+							"color": "#000000",
+							"style": "NORMAL",
+							"weight": "1",
+							"font": "courier",
+							"align": "LEFT"
+						}
+					},
+					{
+						"label": "(CfaAction   (assume (< x 5))   (assign x (+ x 1)))",
+						"source": "node_29",
+						"target": "node_30",
+						"metadata": {
+							"color": "#000000",
+							"style": "NORMAL",
+							"weight": "1",
+							"font": "courier",
+							"align": "LEFT"
+						}
+					},
+					{
+						"label": "(CfaAction   (assume (< x 5))   (assign x (+ x 1)))",
+						"source": "node_30",
+						"target": "node_31",
+						"metadata": {
+							"color": "#000000",
+							"style": "NORMAL",
+							"weight": "1",
+							"font": "courier",
+							"align": "LEFT"
+						}
+					},
+					{
+						"label": "(CfaAction   (assume (< x 5))   (assign x (+ x 1)))",
+						"source": "node_31",
+						"target": "node_32",
+						"metadata": {
+							"color": "#000000",
+							"style": "NORMAL",
+							"weight": "1",
+							"font": "courier",
+							"align": "LEFT"
+						}
+					},
+					{
+						"label": "(CfaAction   (assume (< x 5))   (assign x (+ x 1)))",
+						"source": "node_32",
+						"target": "node_33",
+						"metadata": {
+							"color": "#000000",
+							"style": "NORMAL",
+							"weight": "1",
+							"font": "courier",
+							"align": "LEFT"
+						}
+					},
+					{
+						"label": "(CfaAction   (assume (< x 5))   (assign x (+ x 1)))",
+						"source": "node_33",
+						"target": "node_34",
+						"metadata": {
+							"color": "#000000",
+							"style": "NORMAL",
+							"weight": "1",
+							"font": "courier",
+							"align": "LEFT"
+						}
+					},
+					{
+						"label": "(CfaAction   (assume (not (< x 5))))",
+						"source": "node_33",
+						"target": "node_35",
+						"metadata": {
+							"color": "#000000",
+							"style": "NORMAL",
+							"weight": "1",
+							"font": "courier",
+							"align": "LEFT"
+						}
+					},
+					{
+						"label": "",
+						"source": "node_34",
+						"target": "node_33",
+						"metadata": {
+							"color": "#000000",
+							"style": "DASHED",
+							"weight": "0",
+							"font": "",
+							"align": "CENTER"
+						}
+					},
+					{
+						"label": "(CfaAction   (assume (<= x 5)))",
+						"source": "node_35",
+						"target": "node_36",
+						"metadata": {
+							"color": "#000000",
+							"style": "NORMAL",
+							"weight": "1",
+							"font": "courier",
+							"align": "LEFT"
+						}
+					},
+					{
+						"label": "",
+						"source": "phantom_init0",
+						"target": "node_0",
+						"metadata": {
+							"color": "#000000",
+							"style": "NORMAL",
+							"weight": "1",
+							"font": "",
+							"align": "CENTER"
+						}
+					}
+				]
+			}
+		},
+		"precision": "(GlobalCfaPrec (PredPrec (>= x 5) (<= x 0) (<= x 1) (<= x 2) (<= x 3) (<= x 4) (<= x 5)))"
 	}
-}
+]

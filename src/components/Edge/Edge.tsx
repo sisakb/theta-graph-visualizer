@@ -1,6 +1,7 @@
 // Edge component
+import { Box, Button, Typography } from "@mui/material"
 import { useMemo, useState } from "react"
-import { ArgEdge } from "../../ArgGraph"
+import { ArgEdge } from "../../util/ArgGraph"
 import styles from "./Edge.module.scss"
 
 interface EdgeProps {
@@ -44,13 +45,13 @@ const Edge = ({ from, to, index, maxIndex, edge }: EdgeProps) => {
 		[fromPos, toPos]
 	)
 
+	const lineWidth = 2
+
 	return (
 		<>
-			<div
-				onMouseEnter={() => setHovered(true)}
-				onMouseLeave={() => setHovered(false)}
-				className={`${styles.edge} ${hovered ? styles.hovered : ""} ${edge.backtrack ? styles.dashed : ""}`}
-				style={{
+			<Box
+				className={`edge ${styles.edge} ${hovered ? styles.hovered : ""} ${edge.backtrack ? styles.dashed : ""}`}
+				sx={{
 					position: "absolute",
 					left: fromPos.x,
 					top: fromPos.y,
@@ -60,29 +61,74 @@ const Edge = ({ from, to, index, maxIndex, edge }: EdgeProps) => {
 					),
 					transform: `translateY(-10px) rotate(${angle}rad)`,
 					transformOrigin: "0 50%",
+					opacity: 0.6,
+					"& .line": {
+						background: theme => edge.backtrack ? `repeating-linear-gradient(
+							90deg,
+							${theme.palette.grey[700]} 0%,
+							${theme.palette.grey[700]} 10%,
+							transparent 10%,
+							transparent 20%
+						)` : theme.palette.primary.main,
+						position: "absolute",
+						width: "100%",
+						height: `${lineWidth}px`,
+						top: "50%",
+						left: 0,
+						transform: "translateY(-50%)",
+					},
+					"& .arrowTop": {
+						position: "absolute",
+						width: `${lineWidth * 8}px`,
+						height: `${lineWidth}px`,
+						right: 0,
+						transform: "translateY(9px) rotate(30deg)",
+						transformOrigin: "right",
+						background: theme => edge.backtrack ? theme.palette.grey[700] : theme.palette.primary.main,
+					},
+					"& .arrowBottom": {
+						position: "absolute",
+						width: `${lineWidth * 8}px`,
+						height: `${lineWidth}px`,
+						right: 0,
+						transform: "translateY(9px) rotate(-30deg)",
+						transformOrigin: "right",
+						background: theme => edge.backtrack ? theme.palette.grey[700] : theme.palette.primary.main,
+					},
 				}}
 			>
-				<div className={styles.line}></div>
-				<div className={styles.arrowTop}></div>
-				<div className={styles.arrowBottom}></div>
-			</div>
-			{label && <div
-				onMouseEnter={() => setHovered(true)}
-				onMouseLeave={() => setHovered(false)}
-				className={styles.edgeLabel}
-				style={{
+				<div className="line"></div>
+				<div className="arrowTop"></div>
+				<div className="arrowBottom"></div>
+			</Box>
+			{label && <Button
+				sx={{
 					left: fromPos.x + (toPos.x - fromPos.x) / 2,
 					top:
 						fromPos.y +
-						(toPos.y - fromPos.y) / 2 +
-						(index - maxIndex / 2) * 20 - 15,
+						(toPos.y - fromPos.y) / 2 - 20,
 					transform: "translateX(-50%)",
+					textTransform: "none",
+					position: "absolute",
+					"&:hover": {
+						backdropFilter: "blur(10px)",
+					},
+					zIndex: 10
 				}}
+				className="label"
 			>
-				{labels.map((l) => (
-					<div key={l}>{l}</div>
-				))}
-			</div>}
+				<Typography variant="body2" sx={{
+					lineHeight: 1,
+					mb: -0.5,
+					mt: -0.2,
+					p: 0.5,
+					
+				}} color="text.secondary">
+					{labels.map((l) => (
+						<div key={l}>{l}</div>
+					))}
+				</Typography>
+			</Button>}
 		</>
 	)
 }
