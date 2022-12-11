@@ -11,8 +11,10 @@ import {
 } from "@mui/material"
 import { useMemo } from "react"
 import { IJSONGraph } from "../../IJSONGraph"
+import processActionLabel from "../../util/processActionLabel"
 import processPrecision from "../../util/processPrecision"
-import { useSelector, useStore } from "../../util/store"
+import processPredicate from "../../util/processPredicate"
+import { useSelector } from "../../util/store"
 import Graph from "../Graph/Graph"
 import styles from "./Iteration.module.scss"
 
@@ -50,6 +52,8 @@ const Iteration = ({ iteration }: IIteartionProps) => {
 		isNew: !prevPrecisions.includes(p),
 	}))
 
+	const trace = useSelector((store) => store.traces[iteration.iteration - 1])
+
 	return (
 		<Card
 			sx={{
@@ -75,7 +79,7 @@ const Iteration = ({ iteration }: IIteartionProps) => {
 						<Badge
 							key={index}
 							color="success"
-							badgeContent="★"							
+							badgeContent="★"
 							invisible={!p.isNew}
 							sx={{
 								"& .MuiBadge-badge": {
@@ -94,7 +98,7 @@ const Iteration = ({ iteration }: IIteartionProps) => {
 								}
 								color={
 									selectedPrecision === p.label
-										? "primary"
+										? "secondary"
 										: "default"
 								}
 								key={index}
@@ -107,6 +111,7 @@ const Iteration = ({ iteration }: IIteartionProps) => {
 					<Graph
 						graph={iteration.arg.graph as unknown as IJSONGraph}
 						id={`iteration-${iteration.iteration}`}
+						trace={trace}
 					/>
 				</div>
 			</CardContent>

@@ -1,17 +1,27 @@
 import { createContext, useContext, useState } from "react"
 import { IThetaIteration } from "../components/Iteration/Iteration"
-import data from "../data/test.json"
+import data from "../data/wdl-output.json"
 
 interface IStore {
 	iterations: IThetaIteration[],
+	traces: string[],
+	title: string | null,
+	date: Date | null,
 	selectedPrecision: string | null,
 	setSelectedPrecision: (precision: string | null) => void,
+	showErrorTrace: boolean,
+	setShowErrorTrace: (show: boolean) => void,
 }
 
 const StoreContext = createContext<IStore>({
 	iterations: [],
+	traces: [],
+	title: null,
+	date: null,
 	selectedPrecision: null,
-	setSelectedPrecision: () => { /* pass */ }
+	setSelectedPrecision: () => { /* pass */ },
+	showErrorTrace: false,
+	setShowErrorTrace: () => { /* pass */ },
 })
 
 export const useStore = () => {
@@ -20,12 +30,19 @@ export const useStore = () => {
 
 export const StoreProvider = ({ children }: { children: React.ReactNode }) => {
 	
+	//const [data, setData] = useState<IThetaIteration[] | null>(null)
 	const [selectedPrecision, setSelectedPrecision] = useState<string | null>(null)
+	const [showErrorTrace, setShowErrorTrace] = useState<boolean>(false)
 
 	const store: IStore = {
-		iterations: data as unknown as IThetaIteration[],
+		title: data.title,
+		date: new Date(data.date) ?? null,
+		iterations: data.iterations as unknown as IThetaIteration[],
+		traces: data.traces,
 		selectedPrecision,
 		setSelectedPrecision,
+		showErrorTrace,
+		setShowErrorTrace,
 	}
 
 	return (

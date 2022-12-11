@@ -2,6 +2,7 @@
 import { Box, Button, Typography } from "@mui/material"
 import { useMemo, useState } from "react"
 import { ArgEdge } from "../../util/ArgGraph"
+import { useSelector } from "../../util/store"
 import styles from "./Edge.module.scss"
 
 interface EdgeProps {
@@ -45,7 +46,8 @@ const Edge = ({ from, to, index, maxIndex, edge }: EdgeProps) => {
 		[fromPos, toPos]
 	)
 
-	const lineWidth = 2
+	const showErrorTrace = useSelector(state => state.showErrorTrace)
+	const lineWidth = useMemo(() => edge.isInErrorTrace && showErrorTrace ? 3 : 1, [edge.isInErrorTrace, showErrorTrace])
 
 	return (
 		<>
@@ -69,31 +71,34 @@ const Edge = ({ from, to, index, maxIndex, edge }: EdgeProps) => {
 							${theme.palette.grey[700]} 10%,
 							transparent 10%,
 							transparent 20%
-						)` : theme.palette.primary.main,
+						)` : (edge.isInErrorTrace && showErrorTrace ? theme.palette.error.main : theme.palette.primary.main),
 						position: "absolute",
 						width: "100%",
 						height: `${lineWidth}px`,
 						top: "50%",
 						left: 0,
 						transform: "translateY(-50%)",
+						borderRadius: "10px",
 					},
 					"& .arrowTop": {
 						position: "absolute",
-						width: `${lineWidth * 8}px`,
+						width: "16px",
 						height: `${lineWidth}px`,
 						right: 0,
 						transform: "translateY(9px) rotate(30deg)",
 						transformOrigin: "right",
-						background: theme => edge.backtrack ? theme.palette.grey[700] : theme.palette.primary.main,
+						background: theme => edge.backtrack ? theme.palette.grey[700] : (edge.isInErrorTrace && showErrorTrace ? theme.palette.error.main : theme.palette.primary.main),
+						borderRadius: "10px",
 					},
 					"& .arrowBottom": {
 						position: "absolute",
-						width: `${lineWidth * 8}px`,
+						width: "16px",
 						height: `${lineWidth}px`,
 						right: 0,
 						transform: "translateY(9px) rotate(-30deg)",
 						transformOrigin: "right",
-						background: theme => edge.backtrack ? theme.palette.grey[700] : theme.palette.primary.main,
+						background: theme => edge.backtrack ? theme.palette.grey[700] : (edge.isInErrorTrace && showErrorTrace ? theme.palette.error.main : theme.palette.primary.main),
+						borderRadius: "10px",
 					},
 				}}
 			>
@@ -117,7 +122,7 @@ const Edge = ({ from, to, index, maxIndex, edge }: EdgeProps) => {
 				}}
 				className="label"
 			>
-				<Typography variant="body2" sx={{
+				<Typography variant="body2" component="div" sx={{
 					lineHeight: 1,
 					mb: -0.5,
 					mt: -0.2,

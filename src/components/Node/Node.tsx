@@ -20,6 +20,8 @@ const Node = ({ nodeDrawing, graphId }: NodeProps) => {
 	const selected = false
 
 	const selectedPrecision = useSelector((store) => store.selectedPrecision)
+	const containsSelectedPrecision = selectedPrecision && predicates.some(p => predicatesEqualOrNegated(selectedPrecision, p))
+	const showErrorTrace = useSelector((store) => store.showErrorTrace)
 
 	return (
 		<div
@@ -49,12 +51,14 @@ const Node = ({ nodeDrawing, graphId }: NodeProps) => {
 							minHeight: "80px",
 							zIndex: 999,
 							backdropFilter: "blur(100px)",
+							backgroundColor: containsSelectedPrecision ? theme => `${theme.palette.secondary.main}70` : undefined,
+							border: containsSelectedPrecision ? theme => `1px solid ${theme.palette.secondary.main}` : undefined,
 						},
-						border: selectedPrecision && predicates.some(p => predicatesEqualOrNegated(selectedPrecision, p)) ? theme => `1px solid ${theme.palette.secondary.main}` : undefined,
-						backgroundColor: selectedPrecision && predicates.some(p => predicatesEqualOrNegated(selectedPrecision, p)) ? theme => `${theme.palette.secondary.main}40` : undefined,
+						border: containsSelectedPrecision  ? theme => `1px solid ${theme.palette.secondary.main}` : undefined,
+						backgroundColor: containsSelectedPrecision ? theme => `${theme.palette.secondary.main}40` : undefined,
 					}}
-					variant="outlined"
-					color={node.isError ? "error" : "primary"}
+					variant={(showErrorTrace && node.isInErrorTrace) ? "contained" : "outlined"}
+					color={node.isError || (showErrorTrace && node.isInErrorTrace) ? "error" : "primary"}
 				>
 					<Stack>
 						<Typography

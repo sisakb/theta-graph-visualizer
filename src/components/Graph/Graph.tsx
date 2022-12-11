@@ -10,14 +10,16 @@ import styles from "./Graph.module.scss"
 
 interface GraphProps {
 	graph: IJSONGraph
+	trace: string
 	id: string
 }
 
 const Graph = ({
 	graph,
+	trace,
 	id,
 }: GraphProps) => {
-	const argGraph = useMemo(() => new ArgGraph(graph), [graph])
+	const argGraph = useMemo(() => new ArgGraph(graph, trace), [graph, trace])
 	const treeDrawing = useMemo(() => new ArgTreeDrawer(argGraph), [argGraph])
 
 	const [nodeDomElements, setNodeDomElements] = useState(

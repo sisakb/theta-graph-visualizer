@@ -7,3 +7,6 @@ body {
 	overflow-y: scroll;
 	font-family: sans-serif;
 }
+button, .MuiButton-root {
+	text-transform: none !important;
+}

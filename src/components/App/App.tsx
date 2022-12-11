@@ -1,11 +1,17 @@
-import { ThemeProvider } from "@mui/material"
-import { createContext, useContext, useState } from "react"
+import {
+	AppBar,
+	Button,
+	Divider,
+	ThemeProvider,
+	Toolbar,
+	Typography,
+} from "@mui/material"
 import { useStore } from "../../util/store"
-import Iteration, { IThetaIteration } from "../Iteration/Iteration"
+import Iteration from "../Iteration/Iteration"
 import styles from "./App.module.scss"
 import CssBaseline from "@mui/material/CssBaseline"
 import { theme } from "./theme"
-
+import TopAppBar from "../TopAppBar"
 const App = () => {
 	//const [hoveredNode, setHoveredNode] = useState<ArgNode | null>(null)
 	//const [selectedNode, setSelectedNode] = useState<ArgNode | null>(null)
@@ -15,6 +21,7 @@ const App = () => {
 	return (
 		<ThemeProvider theme={theme}>
 			<CssBaseline />
+			<TopAppBar />
 			<div className={styles.app}>
 				<div className={styles.iterationContainer}>
 					{iterations.map((it, index) => (
