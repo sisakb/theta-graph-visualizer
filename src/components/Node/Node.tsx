@@ -37,20 +37,27 @@ const Node = ({ nodeDrawing, graphId, iteration }: NodeProps) => {
 
 	const precisionInIteration = useSelector(store => store.processedData?.iterations[iteration]?.precisions)
 	const newPrecisionInIteration = useMemo(() => precisionInIteration?.filter(p => p.isNew).map(p => p.label), [precisionInIteration])
+	const precisionInSelectedIteration = useSelector(store => store.processedData?.iterations.at(selectedIteration || 0)?.precisions)
+	const newPrecisionInSelectedIteration = useMemo(() => precisionInSelectedIteration?.filter(p => p.isNew).map(p => p.label), [precisionInSelectedIteration])
 
 	const isSameAsSelected = useMemo(() => {
 		if (!selectedNode || (typeof selectedIteration !== "number")) return false
 		if (iteration === selectedIteration) return selectedNode.id === node.id
 		if (Math.abs(iteration - selectedIteration) > 1) return false
 		const labelsMatch = selectedNode.stateName === stateName
-		const subset = (node.predicates.length === 0 || node.predicates.every((p) => selectedNode?.predicates.includes(p)))
+		//const subset = (node.predicates.length === 0 || node.predicates.every((p) => selectedNode?.predicates.includes(p)))
 		//const superset = (selectedNode?.predicates.every((p) => node.predicates.includes(p)))
 		const superSetWithOnlyNewPrecision = (selectedNode?.predicates.every((p) => node.predicates.includes(p)) && node.predicates.filter(p => !selectedNode.predicates.includes(p)).every(p => {
 			if (newPrecisionInIteration?.includes(p)) return true
 			return Boolean(newPrecisionInIteration?.find(p2 => predicatesEqualOrNegated(p, p2)))
 		}))
 
-		if (iteration < selectedIteration) return labelsMatch && subset
+		const subsetWithOnlyNewPrecision = (node?.predicates.every((p) => selectedNode.predicates.includes(p)) && selectedNode.predicates.filter(p => !node.predicates.includes(p)).every(p => {
+			if (newPrecisionInSelectedIteration?.includes(p)) return true
+			return Boolean(newPrecisionInSelectedIteration?.find(p2 => predicatesEqualOrNegated(p, p2)))
+		}))
+
+		if (iteration < selectedIteration) return labelsMatch && subsetWithOnlyNewPrecision
 		if (iteration > selectedIteration) return labelsMatch && superSetWithOnlyNewPrecision
 
 		return labelsMatch
