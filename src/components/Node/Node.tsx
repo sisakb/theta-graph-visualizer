@@ -1,6 +1,7 @@
 // Node component
 
-import { Box, Button, Chip, Stack, Typography } from "@mui/material"
+import { Box, Button, Stack, Typography } from "@mui/material"
+import { useMemo } from "react"
 import { NodeDrawing } from "../../util/ArgTreeDrawer"
 import { useSelector } from "../../util/store"
 import styles from "./Node.module.scss"
@@ -8,20 +9,30 @@ import styles from "./Node.module.scss"
 interface NodeProps {
 	nodeDrawing: NodeDrawing
 	graphId: string
+	iteration: number
 }
 
 const predicatesEqualOrNegated = (p1: string, p2: string) => p1 === p2 || p1 === `not (${p2})` || p2 === `not (${p1})`
 
-const Node = ({ nodeDrawing, graphId }: NodeProps) => {
+const Node = ({ nodeDrawing, graphId, iteration }: NodeProps) => {
 	const { node } = nodeDrawing
 	const { stateName, predicates } = node
 
 	const hovered = false
-	const selected = false
 
 	const selectedPrecision = useSelector((store) => store.selectedPrecision)
-	const containsSelectedPrecision = selectedPrecision && predicates.some(p => predicatesEqualOrNegated(selectedPrecision, p))
+	const containsSelectedPrecision = useMemo(() => selectedPrecision && predicates.some(p => predicatesEqualOrNegated(selectedPrecision, p)), [selectedPrecision, predicates])
 	const showErrorTrace = useSelector((store) => store.showErrorTrace)
+	const {node: selectedNode, iteration: selectedIteration} = useSelector((store) => store.selectedNode) || {}
+	const setSelectedNode = useSelector((store) => store.setSelectedNode)
+
+	const selected = useMemo(() => {
+		if (!selectedNode || !selectedIteration) return false
+		if (iteration === selectedIteration) return (selectedNode.id === node.id)
+		const labelsMatch = selectedNode.stateName === stateName
+
+		return labelsMatch
+	}, [selectedIteration, selectedNode, stateName, iteration])
 
 	return (
 		<div
@@ -36,6 +47,8 @@ const Node = ({ nodeDrawing, graphId }: NodeProps) => {
 				left: nodeDrawing.x * 110 + 20,
 				top: nodeDrawing.y === 0 ? 0 : (nodeDrawing.y - 1) * 150 + 110,
 			}}
+			onMouseEnter={() => setSelectedNode({node, iteration})}
+			onMouseLeave={() => setSelectedNode(null)}
 		>
 			{!node.isInitial && (
 				<Button
@@ -57,7 +70,7 @@ const Node = ({ nodeDrawing, graphId }: NodeProps) => {
 						border: containsSelectedPrecision  ? theme => `1px solid ${theme.palette.secondary.main}` : undefined,
 						backgroundColor: containsSelectedPrecision ? theme => `${theme.palette.secondary.main}40` : undefined,
 					}}
-					variant={(showErrorTrace && node.isInErrorTrace) ? "contained" : "outlined"}
+					variant={(showErrorTrace && node.isInErrorTrace) || selected ? "contained" : "outlined"}
 					color={node.isError || (showErrorTrace && node.isInErrorTrace) ? "error" : "primary"}
 				>
 					<Stack>
@@ -83,8 +96,8 @@ const Node = ({ nodeDrawing, graphId }: NodeProps) => {
 									sx={{
 										lineHeight: 0.9,
 										fontSize: "0.8rem",
-										fontWeight: selectedPrecision && predicatesEqualOrNegated(selectedPrecision, p) ? "bold" : "normal",
-										color: selectedPrecision && predicatesEqualOrNegated(selectedPrecision, p) ? "secondary.main" : "text.secondary",
+										fontWeight: selectedPrecision && containsSelectedPrecision && predicatesEqualOrNegated(selectedPrecision, p) ? "bold" : "normal",
+										color: selectedPrecision && containsSelectedPrecision && predicatesEqualOrNegated(selectedPrecision, p) ? "secondary.main" : "text.secondary",
 									}}
 									key={index}
 								>

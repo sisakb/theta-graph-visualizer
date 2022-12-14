@@ -1,9 +1,8 @@
 // TopAppBar component
 
-import { AppBar, Box, Button, Checkbox, Divider, FormControlLabel, FormGroup, Stack, Switch, Toolbar, Typography } from "@mui/material"
+import { AppBar, Box, Button, Checkbox, Divider, Stack, Toolbar, Typography } from "@mui/material"
 import FileOpenIcon from "@mui/icons-material/FileOpen"
 import { useSelector } from "../util/store"
-import { CheckBox } from "@mui/icons-material"
 
 const TopAppBar = () => {
 
@@ -12,6 +11,7 @@ const TopAppBar = () => {
 	const date = useSelector((store) => store.date)
 	const showErrorTrace = useSelector((store) => store.showErrorTrace)
 	const setShowErrorTrace = useSelector((store) => store.setShowErrorTrace)
+	const setData = useSelector((store) => store.setData)
 
 	return (
 		<AppBar position="fixed">
@@ -37,6 +37,7 @@ const TopAppBar = () => {
 								if (e.target?.result) {
 									const data = JSON.parse(e.target.result as string)
 									console.log(data)
+									setData(data)
 								}
 							}
 							reader.readAsText(file)

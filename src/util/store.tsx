@@ -1,27 +1,32 @@
-import { createContext, useContext, useState } from "react"
-import { IThetaIteration } from "../components/Iteration/Iteration"
-import data from "../data/wdl-output.json"
+import { createContext, useContext, useMemo, useState } from "react"
+//import data from "../data/wdl-output.json"
+import { ArgNode } from "./ArgGraph"
+import processData, { ThetaWebDebuggerLoggerOutput } from "./processData"
 
 interface IStore {
-	iterations: IThetaIteration[],
-	traces: string[],
+	processedData: ReturnType<typeof processData> | null,
+	setData: (data: ThetaWebDebuggerLoggerOutput | null) => void,
 	title: string | null,
 	date: Date | null,
 	selectedPrecision: string | null,
 	setSelectedPrecision: (precision: string | null) => void,
 	showErrorTrace: boolean,
 	setShowErrorTrace: (show: boolean) => void,
+	selectedNode: {node: ArgNode, iteration: number} | null,
+	setSelectedNode: (input :{node: ArgNode, iteration: number}|null) => void,
 }
 
 const StoreContext = createContext<IStore>({
-	iterations: [],
-	traces: [],
 	title: null,
 	date: null,
+	setData: () => { /* pass */ },
+	processedData: null,
 	selectedPrecision: null,
 	setSelectedPrecision: () => { /* pass */ },
 	showErrorTrace: false,
 	setShowErrorTrace: () => { /* pass */ },
+	selectedNode: null,
+	setSelectedNode: () => { /* pass */ },
 })
 
 export const useStore = () => {
@@ -30,19 +35,24 @@ export const useStore = () => {
 
 export const StoreProvider = ({ children }: { children: React.ReactNode }) => {
 	
-	//const [data, setData] = useState<IThetaIteration[] | null>(null)
+	const [data, setData] = useState<ThetaWebDebuggerLoggerOutput | null>(null)
 	const [selectedPrecision, setSelectedPrecision] = useState<string | null>(null)
 	const [showErrorTrace, setShowErrorTrace] = useState<boolean>(false)
+	const [selectedNode, setSelectedNode] = useState<{node: ArgNode, iteration: number} | null>(null)
+
+	const processedData: ReturnType<typeof processData>|null = useMemo(() => data ? processData(data as unknown as ThetaWebDebuggerLoggerOutput) : null, [data])
 
 	const store: IStore = {
-		title: data.title,
-		date: new Date(data.date) ?? null,
-		iterations: data.iterations as unknown as IThetaIteration[],
-		traces: data.traces,
+		title: data?.title || null,
+		date: data ? new Date(data.date): null,
+		setData,
+		processedData,
 		selectedPrecision,
 		setSelectedPrecision,
 		showErrorTrace,
 		setShowErrorTrace,
+		selectedNode,
+		setSelectedNode,
 	}
 
 	return (

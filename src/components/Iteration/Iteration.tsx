@@ -9,51 +9,21 @@ import {
 	Stack,
 	Typography,
 } from "@mui/material"
-import { useMemo } from "react"
-import { IJSONGraph } from "../../IJSONGraph"
-import processActionLabel from "../../util/processActionLabel"
-import processPrecision from "../../util/processPrecision"
-import processPredicate from "../../util/processPredicate"
+import processData from "../../util/processData"
 import { useSelector } from "../../util/store"
 import Graph from "../Graph/Graph"
 import styles from "./Iteration.module.scss"
 
-export interface IThetaIteration {
-	iteration: number
-	arg: {
-		graph: IJSONGraph
-	}
-	precision: string
-}
-
 interface IIteartionProps {
-	iteration: IThetaIteration
+	iteration: ReturnType<typeof processData>["iterations"][number]
+	index: number
 }
 
-const Iteration = ({ iteration }: IIteartionProps) => {
-	//const store = useStore()
-
-	const iterations = useSelector((store) => store.iterations)
+const Iteration = ({ iteration, index }: IIteartionProps) => {
 	const selectedPrecision = useSelector((store) => store.selectedPrecision)
 	const setSelectedPrecision = useSelector(
 		(store) => store.setSelectedPrecision
 	)
-
-	const prevIteration = iterations[iteration.iteration - 2]
-	const prevPrecisions = useMemo(
-		() => (prevIteration ? processPrecision(prevIteration.precision) : []),
-		[prevIteration?.precision]
-	)
-	const precisions = useMemo(
-		() => processPrecision(iteration.precision),
-		[iteration.precision]
-	).map((p) => ({
-		label: p,
-		isNew: !prevPrecisions.includes(p),
-	}))
-
-	const trace = useSelector((store) => store.traces[iteration.iteration - 1])
-
 	return (
 		<Card
 			sx={{
@@ -63,7 +33,7 @@ const Iteration = ({ iteration }: IIteartionProps) => {
 		>
 			<CardContent>
 				<Typography variant="h6" gutterBottom>
-					Iteration #{iteration.iteration}
+					Iteration #{index + 1}
 				</Typography>
 				<Divider />
 				<Typography
@@ -72,10 +42,10 @@ const Iteration = ({ iteration }: IIteartionProps) => {
 					gutterBottom
 					sx={{ mt: 1 }}
 				>
-					Precision: {!precisions?.length && <em>None</em>}
+					Precision: {!iteration.precisions?.length && <em>None</em>}
 				</Typography>
 				<Stack direction="row" spacing={1}>
-					{precisions.map((p, index) => (
+					{iteration.precisions.map((p, index) => (
 						<Badge
 							key={index}
 							color="success"
@@ -84,7 +54,7 @@ const Iteration = ({ iteration }: IIteartionProps) => {
 							sx={{
 								"& .MuiBadge-badge": {
 									color: "#fff",
-								}
+								},
 							}}
 						>
 							<Chip
@@ -109,9 +79,10 @@ const Iteration = ({ iteration }: IIteartionProps) => {
 				</Stack>
 				<div className={styles.graph}>
 					<Graph
-						graph={iteration.arg.graph as unknown as IJSONGraph}
-						id={`iteration-${iteration.iteration}`}
-						trace={trace}
+						iteration={index}
+						id={`iteration-${index}`}
+						argGraph={iteration.argGraph}
+						treeDrawing={iteration.argDrawing}
 					/>
 				</div>
 			</CardContent>

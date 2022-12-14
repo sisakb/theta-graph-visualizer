@@ -1,26 +1,27 @@
 // Graph component
 
 import { useEffect, useMemo, useState } from "react"
-import ArgGraph, { ArgNode } from "../../util/ArgGraph"
+import ArgGraph from "../../util/ArgGraph"
 import ArgTreeDrawer from "../../util/ArgTreeDrawer"
 import Edge from "../Edge/Edge"
 import Node from "../Node/Node"
-import { IJSONGraph } from "../../IJSONGraph"
 import styles from "./Graph.module.scss"
 
 interface GraphProps {
-	graph: IJSONGraph
-	trace: string
 	id: string
+	iteration: number
+	argGraph: ArgGraph
+	treeDrawing: ArgTreeDrawer
 }
 
 const Graph = ({
-	graph,
-	trace,
+	argGraph,
+	treeDrawing,
 	id,
+	iteration,	
 }: GraphProps) => {
-	const argGraph = useMemo(() => new ArgGraph(graph, trace), [graph, trace])
-	const treeDrawing = useMemo(() => new ArgTreeDrawer(argGraph), [argGraph])
+	//const argGraph = useMemo(() => new ArgGraph(graph, trace), [graph, trace])
+	//const treeDrawing = useMemo(() => new ArgTreeDrawer(argGraph), [argGraph])
 
 	const [nodeDomElements, setNodeDomElements] = useState(
 		new Map<string, HTMLElement>()
@@ -68,6 +69,7 @@ const Graph = ({
 			>
 				{[...treeDrawing.nodes.values()].map((drawingNode, index) => (
 					<Node
+						iteration={iteration}
 						nodeDrawing={drawingNode}
 						key={index}
 						graphId={id}
