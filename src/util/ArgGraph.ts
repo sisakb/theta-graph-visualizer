@@ -50,6 +50,14 @@ export class ArgEdge {
 								assignMatch
 							return `${variable} = ${left} ${operator} ${right}`
 						}
+						const assignMatch2 = label.match(
+							/assign\s*(\w)\s*(\d*)/
+						)
+						if (assignMatch2) {
+							const [_, variable, value] =
+								assignMatch2
+							return `${variable} = ${value}`
+						}
 						return label
 					})
 			}
@@ -92,7 +100,7 @@ export class ArgNode {
 				?.replace(/\)\s*\(/g, ";")
 				.trim()
 				.slice(1, -1)
-				.split(";") ?? []
+				.split(";").filter(p => p!=="") ?? []
 		this.predicates = this.predicates.map((predicate) => {
 			const matches = predicate.match(/(<=|<|>|>=)\s(.*)\s(.*)/)
 			if (matches) {

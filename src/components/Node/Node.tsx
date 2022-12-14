@@ -12,7 +12,8 @@ interface NodeProps {
 	iteration: number
 }
 
-const predicatesEqualOrNegated = (p1: string, p2: string) => p1 === p2 || p1 === `not (${p2})` || p2 === `not (${p1})`
+const predicatesEqualOrNegated = (p1: string, p2: string) =>
+	p1 === p2 || p1 === `not (${p2})` || p2 === `not (${p1})`
 
 const Node = ({ nodeDrawing, graphId, iteration }: NodeProps) => {
 	const { node } = nodeDrawing
@@ -21,18 +22,43 @@ const Node = ({ nodeDrawing, graphId, iteration }: NodeProps) => {
 	const hovered = false
 
 	const selectedPrecision = useSelector((store) => store.selectedPrecision)
-	const containsSelectedPrecision = useMemo(() => selectedPrecision && predicates.some(p => predicatesEqualOrNegated(selectedPrecision, p)), [selectedPrecision, predicates])
+	const containsSelectedPrecision = useMemo(
+		() =>
+			selectedPrecision &&
+			predicates.some((p) =>
+				predicatesEqualOrNegated(selectedPrecision, p)
+			),
+		[selectedPrecision, predicates]
+	)
 	const showErrorTrace = useSelector((store) => store.showErrorTrace)
-	const {node: selectedNode, iteration: selectedIteration} = useSelector((store) => store.selectedNode) || {}
+	const { node: selectedNode, iteration: selectedIteration } =
+		useSelector((store) => store.selectedNode) || {}
 	const setSelectedNode = useSelector((store) => store.setSelectedNode)
 
-	const selected = useMemo(() => {
-		if (!selectedNode || !selectedIteration) return false
-		if (iteration === selectedIteration) return (selectedNode.id === node.id)
+	const precisionInIteration = useSelector(store => store.processedData?.iterations[iteration]?.precisions)
+	const newPrecisionInIteration = useMemo(() => precisionInIteration?.filter(p => p.isNew).map(p => p.label), [precisionInIteration])
+
+	const isSameAsSelected = useMemo(() => {
+		if (!selectedNode || (typeof selectedIteration !== "number")) return false
+		if (iteration === selectedIteration) return selectedNode.id === node.id
+		if (Math.abs(iteration - selectedIteration) > 1) return false
 		const labelsMatch = selectedNode.stateName === stateName
+		const subset = (node.predicates.length === 0 || node.predicates.every((p) => selectedNode?.predicates.includes(p)))
+		//const superset = (selectedNode?.predicates.every((p) => node.predicates.includes(p)))
+		const superSetWithOnlyNewPrecision = (selectedNode?.predicates.every((p) => node.predicates.includes(p)) && node.predicates.filter(p => !selectedNode.predicates.includes(p)).every(p => {
+			if (newPrecisionInIteration?.includes(p)) return true
+			return Boolean(newPrecisionInIteration?.find(p2 => predicatesEqualOrNegated(p, p2)))
+		}))
+
+		if (iteration < selectedIteration) return labelsMatch && subset
+		if (iteration > selectedIteration) return labelsMatch && superSetWithOnlyNewPrecision
 
 		return labelsMatch
 	}, [selectedIteration, selectedNode, stateName, iteration])
+
+	const isSelectedNode = useMemo(() => selectedNode?.id === node.id && selectedIteration === iteration, [selectedNode, selectedIteration, iteration])
+
+	//const secondaryColor = containsSelectedPrecision || isSelectedNode
 
 	return (
 		<div
@@ -40,15 +66,13 @@ const Node = ({ nodeDrawing, graphId, iteration }: NodeProps) => {
 			className={`${styles.nodeContainer} ${
 				node.isInitial ? styles.initial : ""
 			} ${hovered ? styles.hovered : ""} ${
-				selected ? styles.selected : ""
+				isSameAsSelected ? styles.selected : ""
 			}`}
 			style={{
 				position: "absolute",
 				left: nodeDrawing.x * 110 + 20,
 				top: nodeDrawing.y === 0 ? 0 : (nodeDrawing.y - 1) * 150 + 110,
 			}}
-			onMouseEnter={() => setSelectedNode({node, iteration})}
-			onMouseLeave={() => setSelectedNode(null)}
 		>
 			{!node.isInitial && (
 				<Button
@@ -64,14 +88,33 @@ const Node = ({ nodeDrawing, graphId, iteration }: NodeProps) => {
 							minHeight: "80px",
 							zIndex: 999,
 							backdropFilter: "blur(100px)",
-							backgroundColor: containsSelectedPrecision ? theme => `${theme.palette.secondary.main}70` : undefined,
-							border: containsSelectedPrecision ? theme => `1px solid ${theme.palette.secondary.main}` : undefined,
+							backgroundColor: containsSelectedPrecision
+								? (theme) => `${theme.palette.secondary.main}70`
+								: undefined,
+							border: containsSelectedPrecision
+								? (theme) =>
+									`1px solid ${theme.palette.secondary.main}`
+								: undefined,
 						},
-						border: containsSelectedPrecision  ? theme => `1px solid ${theme.palette.secondary.main}` : undefined,
-						backgroundColor: containsSelectedPrecision ? theme => `${theme.palette.secondary.main}40` : undefined,
+						border: containsSelectedPrecision
+							? (theme) =>
+								`1px solid ${theme.palette.secondary.main}`
+							: undefined,
+						backgroundColor: containsSelectedPrecision
+							? (theme) => `${theme.palette.secondary.main}40`
+							: undefined,
 					}}
-					variant={(showErrorTrace && node.isInErrorTrace) || selected ? "contained" : "outlined"}
-					color={node.isError || (showErrorTrace && node.isInErrorTrace) ? "error" : "primary"}
+					variant={
+						(showErrorTrace && node.isInErrorTrace) || isSameAsSelected
+							? "contained"
+							: "outlined"
+					}
+					color={
+						node.isError || (showErrorTrace && node.isInErrorTrace)
+							? "error"
+							: (isSelectedNode ? "secondary" : "primary")
+					}
+					onClick={() => setSelectedNode({ node, iteration })}
 				>
 					<Stack>
 						<Typography
@@ -96,14 +139,37 @@ const Node = ({ nodeDrawing, graphId, iteration }: NodeProps) => {
 									sx={{
 										lineHeight: 0.9,
 										fontSize: "0.8rem",
-										fontWeight: selectedPrecision && containsSelectedPrecision && predicatesEqualOrNegated(selectedPrecision, p) ? "bold" : "normal",
-										color: selectedPrecision && containsSelectedPrecision && predicatesEqualOrNegated(selectedPrecision, p) ? "secondary.main" : "text.secondary",
+										fontWeight:
+											selectedPrecision &&
+											containsSelectedPrecision &&
+											predicatesEqualOrNegated(
+												selectedPrecision,
+												p
+											)
+												? "bold"
+												: "normal",
+										color:
+											selectedPrecision &&
+											containsSelectedPrecision &&
+											predicatesEqualOrNegated(
+												selectedPrecision,
+												p
+											)
+												? "secondary.main"
+												: undefined,
 									}}
 									key={index}
 								>
 									{p}
 								</Typography>
 							))}
+							{/*selectedNode?.stateName === node.stateName && <Typography sx={{ fontSize: 12 }}>
+								{(node.predicates.length === 0 || node.predicates.every((p) => selectedNode?.predicates.includes(p))) && "Subset "}
+								{(selectedNode?.predicates.every((p) => node.predicates.includes(p))) && "Superset"}{(selectedNode?.predicates.every((p) => node.predicates.includes(p)) && node.predicates.filter(p => !selectedNode.predicates.includes(p)).every(p => {
+									if (newPrecisionInIteration?.includes(p)) return true
+									return Boolean(newPrecisionInIteration?.find(p2 => predicatesEqualOrNegated(p, p2)))
+								})) && "(only new)"}
+							</Typography>*/}
 						</Typography>
 					</Stack>
 				</Button>

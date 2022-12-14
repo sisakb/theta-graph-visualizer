@@ -1,5 +1,5 @@
 import { createContext, useContext, useMemo, useState } from "react"
-//import data from "../data/wdl-output.json"
+import testData from "../data/wdl-output.json"
 import { ArgNode } from "./ArgGraph"
 import processData, { ThetaWebDebuggerLoggerOutput } from "./processData"
 
@@ -35,7 +35,7 @@ export const useStore = () => {
 
 export const StoreProvider = ({ children }: { children: React.ReactNode }) => {
 	
-	const [data, setData] = useState<ThetaWebDebuggerLoggerOutput | null>(null)
+	const [data, setData] = useState<ThetaWebDebuggerLoggerOutput | null>(testData as unknown as ThetaWebDebuggerLoggerOutput)
 	const [selectedPrecision, setSelectedPrecision] = useState<string | null>(null)
 	const [showErrorTrace, setShowErrorTrace] = useState<boolean>(false)
 	const [selectedNode, setSelectedNode] = useState<{node: ArgNode, iteration: number} | null>(null)

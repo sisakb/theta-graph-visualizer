@@ -117,6 +117,7 @@ const Edge = ({ from, to, index, maxIndex, edge }: EdgeProps) => {
 					position: "absolute",
 					"&:hover": {
 						backdropFilter: "blur(10px)",
+						zIndex: 999
 					},
 					zIndex: 10
 				}}
