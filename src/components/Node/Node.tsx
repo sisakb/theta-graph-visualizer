@@ -121,7 +121,7 @@ const Node = ({ nodeDrawing, graphId, iteration }: NodeProps) => {
 							? "error"
 							: (isSelectedNode ? "secondary" : "primary")
 					}
-					onClick={() => setSelectedNode({ node, iteration })}
+					onClick={() => setSelectedNode(isSelectedNode ? null : { node, iteration })}
 				>
 					<Stack>
 						<Typography
