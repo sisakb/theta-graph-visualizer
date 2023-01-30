@@ -54,12 +54,17 @@ export class ArgEdge {
 							/assign\s*(\w)\s*(\d*)/
 						)
 						if (assignMatch2) {
-							const [_, variable, value] =
-								assignMatch2
+							const [_, variable, value] = assignMatch2
 							return `${variable} = ${value}`
 						}
 						return label
 					})
+			}
+
+			const [__, xcfaLabels] =
+				this.label?.match(/\(XcfaSTAction\s*\((.*)\)\)/) ?? []
+			if (xcfaLabels) {
+				this.labels = [xcfaLabels]
 			}
 		}
 	}
@@ -90,7 +95,9 @@ export class ArgNode {
 		this.metadata = jsonNode.metadata || {}
 
 		const [_, name, predicates] =
-			this.label?.match(/\(CfaState\s(.*)\s\(PredState(.*)\)\)/) ?? []
+			this.label?.match(/\(CfaState\s(.*)\s\(PredState(.*)\)\)/) ??
+			this.label?.match(/\(XcfaState\s(.*)\s\(ExplState(.*)\)\)/) ??
+			[]
 		this.stateName = name?.trim() ?? ""
 		if (this.stateName === "ERR") {
 			this.type = ArgNodeType.Error
@@ -100,7 +107,8 @@ export class ArgNode {
 				?.replace(/\)\s*\(/g, ";")
 				.trim()
 				.slice(1, -1)
-				.split(";").filter(p => p!=="") ?? []
+				.split(";")
+				.filter((p) => p !== "") ?? []
 		this.predicates = this.predicates.map((predicate) => {
 			const matches = predicate.match(/(<=|<|>|>=)\s(.*)\s(.*)/)
 			if (matches) {
@@ -235,14 +243,23 @@ class ArgGraph {
 		if (rawErrorTrace) {
 			this.traceRoute = this.processErrorTrace(rawErrorTrace)
 			const traceRouteIterator = this.traceRoute[Symbol.iterator]()
-			let currentNode: ArgNode | null = [...this.nodes.values()].find((node) => node.stateName === this.traceRoute[0][0]?.label) ?? null
+			let currentNode: ArgNode | null =
+				[...this.nodes.values()].find(
+					(node) =>
+						this.traceRoute[0] &&
+						node.stateName === this.traceRoute[0][0]?.label
+				) ?? null
 			while (currentNode) {
 				currentNode.isInErrorTrace = true
 				const currentTrace = traceRouteIterator.next()
 				if (currentTrace.done) break
 				const action = currentTrace.value[1] as TraceRouteAction
 				const parentEdge = currentNode.parentEdge
-				if (parentEdge?.labels?.every((label) => action?.labels?.includes(label))) {
+				if (
+					parentEdge?.labels?.every((label) =>
+						action?.labels?.includes(label)
+					)
+				) {
 					parentEdge.isInErrorTrace = true
 				}
 				currentNode = currentNode.parent ?? null
@@ -272,8 +289,9 @@ class ArgGraph {
 				if (actionMatch) {
 					return {
 						type: "action",
-						labels: actionMatch[1]
-							.trim()
+						labels: actionMatch
+							.at(1)
+							?.trim()
 							.replaceAll(/\)\s*\(/g, ";")
 							.split(";")
 							.map(processActionLabel),
@@ -286,12 +304,11 @@ class ArgGraph {
 				// partition into pairs of state-action
 				if (curr?.type === "state") {
 					acc.push([curr as TraceRouteState, null])
-				} else if (curr?.type === "action") {
+				} else if (curr?.type === "action" && acc[acc.length - 1]) {
 					acc[acc.length - 1][1] = curr as TraceRouteAction
 				}
 				return acc
 			}, [] as TraceRoute)
-
 	}
 
 	private findRootNode(): ArgNode {
