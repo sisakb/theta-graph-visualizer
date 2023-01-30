@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 import { IJSONEdge, IJSONGraph, IJSONNode } from "../IJSONGraph"
 import processActionLabel from "./processActionLabel"
 import processPredicate from "./processPredicate"
@@ -66,6 +67,10 @@ export class ArgEdge {
 			if (xcfaLabels) {
 				this.labels = [xcfaLabels]
 			}
+
+			if (!this.labels.length) {
+				this.labels = [this.label]
+			}
 		}
 	}
 }
@@ -94,10 +99,14 @@ export class ArgNode {
 		this.label = jsonNode.label || ""
 		this.metadata = jsonNode.metadata || {}
 
-		const [_, name, predicates] =
-			this.label?.match(/\(CfaState\s(.*)\s\(PredState(.*)\)\)/) ??
-			this.label?.match(/\(XcfaState\s(.*)\s\(ExplState(.*)\)\)/) ??
-			[]
+		const [_, name, predicates] = this.label?.match(
+			/\(CfaState\s(.*)\s\(PredState(.*)\)\)/
+		) ??
+			this.label?.match(/\(XcfaState\s(.*)\s\(ExplState(.*)\)\)/) ?? [
+				undefined,
+				this.label,
+				undefined,
+			]
 		this.stateName = name?.trim() ?? ""
 		if (this.stateName === "ERR") {
 			this.type = ArgNodeType.Error
