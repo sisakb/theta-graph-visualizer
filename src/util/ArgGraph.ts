@@ -271,10 +271,14 @@ class ArgGraph {
 		const [_, res] = errorTrace.match(/\(Trace\s*\((.*)\)\)/) || []
 		return res
 			.replaceAll(/\)\s*\(Cfa/g, ";Cfa")
+			.replaceAll(/\)\s*\(Xcfa/g, ";Xcfa")
 			.split(";")
 			.map((t) => {
-				const stateMatch = t.match(/CfaState\s(.*)\s\(PredState(.*)\)/)
+				const stateMatch =
+					t.match(/CfaState\s(.*)\s\(PredState(.*)\)/) ||
+					t.match(/XcfaState\s(.*)\s\(ExplState(.*)\)/)
 				if (stateMatch) {
+					console.log("trace statematch", stateMatch)
 					return {
 						type: "state",
 						label: stateMatch[1],
@@ -285,7 +289,9 @@ class ArgGraph {
 							.map(processPredicate),
 					}
 				}
-				const actionMatch = t.match(/CfaAction\s*\((.*)\)/) ?? []
+				const actionMatch =
+					t.match(/CfaAction\s*\((.*)\)/) ??
+					t.match(/XcfaAction\s*\((.*)\)/)
 				if (actionMatch) {
 					return {
 						type: "action",
